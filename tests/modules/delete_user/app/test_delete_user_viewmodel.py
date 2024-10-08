@@ -1,5 +1,5 @@
 from src.modules.delete_user.app.delete_user_viewmodel import DeleteUserViewmodel
-from src.shared.domain.entities.user import User
+from src.shared.domain.entities.student_organization import User
 from src.shared.domain.enums.state_enum import STATE
 
 

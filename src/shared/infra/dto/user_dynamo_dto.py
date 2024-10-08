@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from src.shared.domain.entities.user import User
+from src.shared.domain.entities.student_organization import User
 from src.shared.domain.enums.state_enum import STATE
 
 
