@@ -1,4 +1,4 @@
-from decimal import Decimal
+
 
 from src.shared.domain.entities.student_organization import StudentOrganization
 from src.shared.domain.enums.state_enum import STATE
@@ -53,10 +53,10 @@ class Test_StudentOrganizationDynamoDTO:
         assert student_organization_dynamo == expected_dict
 
     def test_from_dynamo(self):
-        dynamo_dict = {'Item': {'stu_org_id': hash("mateus" + str(1234)),
+        dynamo_dict = {'Item': {'stu_org_id': 1234,
                                 'name': 'mateus',
-                                'SK': '#' + str(hash("mateus" + str(1234))),
-                                'PK': 'stu_org#' + str(hash("mateus" + str(1234))),
+                                'SK': '#' + str(1234),
+                                'PK': 'stu_org#' + str(1234),
                                 'entity': 'student_organization',
                                 'description': 'description',
                                 'creation_date': 1234,
@@ -77,7 +77,7 @@ class Test_StudentOrganizationDynamoDTO:
         stu_org_dto = StudentOrganizationDynamoDTO.from_dynamo(stu_org_data=dynamo_dict["Item"])
 
         expected_stu_org_dto = StudentOrganizationDynamoDTO(
-            stu_org_id=hash("mateus" + str(1234)),
+            stu_org_id=1234,
             name='mateus',
             description='description',
             creation_date=1234,
@@ -111,10 +111,10 @@ class Test_StudentOrganizationDynamoDTO:
         assert stu_org.website_link == repo.stu_orgs[0].website_link
 
     def test_from_dynamo_to_entity(self):
-        dynamo_item = {'Item': {'stu_org_id': hash("mateus" + str(1234)),
+        dynamo_item = {'Item': {'stu_org_id': 1234,
                                 'name': 'mateus',
-                                'SK': '#' + str(hash("mateus" + str(1234))),
-                                'PK': 'stu_org#' + str(hash("mateus" + str(1234))),
+                                'SK': '#' + str(1234),
+                                'PK': 'stu_org#' + str(1234),
                                 'entity': 'student_organization',
                                 'description': 'description',
                                 'creation_date': 1234,

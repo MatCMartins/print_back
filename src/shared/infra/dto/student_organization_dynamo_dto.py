@@ -1,4 +1,3 @@
-from decimal import Decimal
 
 from src.shared.domain.entities.student_organization import StudentOrganization
 from src.shared.domain.enums.state_enum import STATE
@@ -75,7 +74,7 @@ class StudentOrganizationDynamoDTO:
         return StudentOrganization(
             name=self.name,
             description=self.description,
-            creation_date=self.creation_date,
+            creation_date=int(self.creation_date),
             logo=self.logo,
             instagram=self.instagram,
             website_link=self.website_link

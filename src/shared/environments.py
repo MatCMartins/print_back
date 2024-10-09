@@ -40,7 +40,6 @@ class Environments:
             self._configure_local()
 
         self.stage = STAGE[os.environ.get("STAGE")]
-        self.mss_name = os.environ.get("MSS_NAME")
         
         if self.stage == STAGE.TEST:
             self.s3_bucket_name = "bucket-test"

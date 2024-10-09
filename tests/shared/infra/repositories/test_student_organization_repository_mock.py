@@ -22,7 +22,7 @@ class Test_StudentOrganizationRepositoryMock:
         with pytest.raises(NoItemsFound):
             stu_org = repo.get_stu_org(69)
 
-    def test_get_all_stu_org(self):
+    def test_get_all_stu_orgs(self):
         repo = StudentOrganizationRepositoryMock()
         stu_orgs = repo.get_all_stu_orgs()
         assert len(stu_orgs) == 3

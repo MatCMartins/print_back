@@ -1,9 +1,8 @@
 import abc
-import re
+import hashlib
 
 from src.shared.domain.enums.state_enum import STATE
 from src.shared.helpers.errors.domain_errors import EntityError
-
 
 class StudentOrganization(abc.ABC):
     stu_org_id: int
@@ -40,9 +39,8 @@ class StudentOrganization(abc.ABC):
             raise EntityError("Invalid website_link")
         self.website_link = website_link
 
-        #create personalized id
-        self.stu_org_id = hash(name + str(creation_date))
-
+        
+        self.stu_org_id = hashlib.md5((name + str(creation_date)).encode()).hexdigest()
         
     @staticmethod
     def validate_parameters(param: str) -> bool:
@@ -54,6 +52,7 @@ class StudentOrganization(abc.ABC):
 
     @staticmethod
     def validate_creation_date(param: int) -> bool:
+        print(param, type(param))
         if param is None:
             return False
         elif type(param) != int:
