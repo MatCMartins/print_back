@@ -5,7 +5,7 @@ from src.shared.domain.enums.state_enum import STATE
 from src.shared.helpers.errors.domain_errors import EntityError
 
 class StudentOrganization(abc.ABC):
-    stu_org_id: int
+    stu_org_id: str
     name: str
     description: str
     creation_date: int
