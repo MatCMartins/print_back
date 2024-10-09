@@ -58,6 +58,16 @@ class StudentOrganization(abc.ABC):
             return False
         return True
 
+    def to_dict(self):
+        return {
+            "stu_org_id": self.stu_org_id,
+            "name": self.name,
+            "description": self.description,
+            "creation_date": self.creation_date,
+            "logo": self.logo,
+            "instagram": self.instagram,
+            "website_link": self.website_link
+        }
 
     def __repr__(self):
         return f"StudentOrganization(stu_org_id={self.stu_org_id}, name={self.name}, description={self.description}, creation_date={self.creation_date} logo={self.logo}, instagram={self.instagram}, website_link={self.website_link})"

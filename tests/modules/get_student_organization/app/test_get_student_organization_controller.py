@@ -5,7 +5,7 @@ from src.shared.infra.repositories.student_organization_repository_mock import S
 
 repo = StudentOrganizationRepositoryMock()
 
-class Test_StudentOrganizationController:
+class Test_GetStudentOrganizationController:
     def test_get_student_organization_controller(self):
         usecase = GetStudentOrganizationsUsecase(repo)
         controller = GetStudentOrganizationController(usecase)

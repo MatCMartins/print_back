@@ -3,7 +3,7 @@ from src.shared.infra.repositories.student_organization_repository_mock import S
 
 repo = StudentOrganizationRepositoryMock()
 
-class Test_StudentOrganizationUsecase:
+class Test_GetStudentOrganizationUsecase:
     def test_get_student_organization_usecase(self):
         usecase = GetStudentOrganizationsUsecase(repo)
 

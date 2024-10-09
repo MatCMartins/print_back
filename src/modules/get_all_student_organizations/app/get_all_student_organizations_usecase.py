@@ -4,14 +4,15 @@ from src.shared.helpers.errors.usecase_errors import NoItemsFound
 
 
 
-class GetStudentOrganizationsUsecase:
+class GetAllStudentOrganizationsUsecase:
 
     def __init__(self, repo: IStudentOrganizationRepository):
         self.repo = repo
     
-    def __call__(self, stu_org_id: str):
-
-        if not self.repo.get_stu_org(stu_org_id):
-            raise NoItemsFound("Student Organization not found")
+    def __call__(self) -> list[StudentOrganization]:
+        student_organizations = self.repo.get_all_stu_orgs()
         
-        return self.repo.get_stu_org(stu_org_id)
+        if len(student_organizations) == 0:
+            raise NoItemsFound("student organizations")
+        
+        return student_organizations

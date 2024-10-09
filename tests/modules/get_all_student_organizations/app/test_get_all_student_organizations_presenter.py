@@ -2,13 +2,12 @@ import json
 from dataclasses import dataclass
 import pytest
 
-from src.modules.get_student_organization.app.get_student_organization_presenter import lambda_handler
+from src.modules.get_all_student_organizations.app.get_all_student_organizations_presenter import lambda_handler
 from src.shared.infra.repositories.student_organization_repository_mock import StudentOrganizationRepositoryMock
 
-class Test_GetStudentOrganizationPresenter:
+class Test_GetAllStudentOrganizationsPresenter:
 
     def test_get_student_organization_presenter(self):
-        first_org_id = StudentOrganizationRepositoryMock().stu_orgs[0].stu_org_id
         event = {
             "version": "2.0",
             "routeKey": "$default",
@@ -23,7 +22,6 @@ class Test_GetStudentOrganizationPresenter:
                 "header2": "value1,value2"
             },
             "queryStringParameters": {
-                "stu_org_id": first_org_id
             },
             "requestContext": {
                 "accountId": "123456789012",
@@ -63,9 +61,3 @@ class Test_GetStudentOrganizationPresenter:
 
         response = lambda_handler(event, None)
         assert response["statusCode"] == 200
-        assert json.loads(response["body"])["name"] == "Data Science Club IMT"
-        assert json.loads(response["body"])["description"] == "Organization dedicated to promoting knowledge and projects in the field of data science and machine learning."
-        assert json.loads(response["body"])["creation_date"] == 1620009600
-        assert json.loads(response["body"])["logo"] == "https://datascienceclubimt.com/logo.png"
-        assert json.loads(response["body"])["instagram"] == "https://instagram.com/datascienceclubimt"
-        assert json.loads(response["body"])["website_link"] == "https://datascienceimt.com"
