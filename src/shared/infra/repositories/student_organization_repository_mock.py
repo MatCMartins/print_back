@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from src.shared.domain.entities.student_organization import StudentOrganization
 from src.shared.domain.enums.state_enum import STATE
@@ -41,7 +41,7 @@ class StudentOrganizationRepositoryMock(IStudentOrganizationRepository):
         for org in self.stu_orgs:
             if org.stu_org_id == stu_org_id:
                 return org
-        raise NoItemsFound("stu_org_id")
+        return None
 
     def get_all_stu_orgs(self) -> List[StudentOrganization]:
         return self.stu_orgs
@@ -55,9 +55,9 @@ class StudentOrganizationRepositoryMock(IStudentOrganizationRepository):
             if org.stu_org_id == stu_org_id:
                 return self.stu_orgs.pop(idx)
 
-        raise NoItemsFound("stu_org_id")
+        return None
 
-    def update_stu_org(self, stu_org_id: int, new_name: str = None, new_description: str = None, new_creation_date: int = None, new_logo: str = None, new_instagram: str = None, new_website_link: str = None) -> StudentOrganization:
+    def update_stu_org(self, stu_org_id: int, new_name: Optional[str] = None, new_description: Optional[str] = None, new_creation_date: int = None, new_logo: Optional[str] = None, new_instagram: Optional[str] = None, new_website_link: Optional[str] = None) -> StudentOrganization:
         for stu_org in self.stu_orgs:
             if stu_org.stu_org_id == stu_org_id:
                 if new_name is not None:
@@ -74,4 +74,4 @@ class StudentOrganizationRepositoryMock(IStudentOrganizationRepository):
                     stu_org.website_link = new_website_link
                 return stu_org
 
-        raise NoItemsFound("stu_org_id")
+        return None

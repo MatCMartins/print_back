@@ -19,8 +19,7 @@ class Test_StudentOrganizationRepositoryMock:
 
     def test_get_stu_org_not_found(self):
         repo = StudentOrganizationRepositoryMock()
-        with pytest.raises(NoItemsFound):
-            stu_org = repo.get_stu_org(69)
+        assert repo.get_stu_org(32) == None
 
     def test_get_all_stu_orgs(self):
         repo = StudentOrganizationRepositoryMock()
@@ -60,8 +59,7 @@ class Test_StudentOrganizationRepositoryMock:
 
     def test_delete_stu_org_not_found(self):
         repo = StudentOrganizationRepositoryMock()
-        with pytest.raises(NoItemsFound):
-            stu_org = repo.delete_stu_org(69)
+        assert repo.delete_stu_org(32) == None
 
     def test_update_stu_org(self):
         repo = StudentOrganizationRepositoryMock()
@@ -72,6 +70,6 @@ class Test_StudentOrganizationRepositoryMock:
 
     def test_update_stu_org_not_found(self):
         repo = StudentOrganizationRepositoryMock()
-        with pytest.raises(NoItemsFound):
-            stu_org = repo.update_stu_org(69, "Maua Tech")
+
+        assert repo.update_stu_org(32, "Maua Tech") == None
 

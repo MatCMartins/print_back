@@ -29,9 +29,9 @@ class Test_deleteStudentOrganizationController:
         request = HttpRequest(query_params={"stu_org_id": "12321"})
 
         response = controller(request)
-
+    
         assert response.status_code == 400
-        assert response.body == "No items found for stu_org_id"
+        assert response.body == "No items found for Student Organization"
     
     def test_delete_student_organization_controller_wrong_parameter_type(self):
         usecase = DeleteStudentOrganizationsUsecase(repo)

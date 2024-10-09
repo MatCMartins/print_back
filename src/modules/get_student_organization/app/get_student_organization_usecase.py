@@ -12,6 +12,6 @@ class GetStudentOrganizationsUsecase:
     def __call__(self, stu_org_id: str):
 
         if not self.repo.get_stu_org(stu_org_id):
-            raise NoItemsFound("Student Organization not found")
+            raise NoItemsFound("Student Organization")
         
         return self.repo.get_stu_org(stu_org_id)

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Optional
 
 from src.shared.domain.entities.student_organization import StudentOrganization
 
@@ -29,7 +29,7 @@ class IStudentOrganizationRepository(ABC):
         pass
 
     @abstractmethod
-    def update_stu_org(self, stu_org_id: int, new_name: str = None, new_description: str = None, new_creation_date: int = None, new_logo: str = None, new_instagram: str = None, new_website_link: str = None) -> StudentOrganization:
+    def update_stu_org(self, stu_org_id: int, new_name: Optional[str] = None, new_description: Optional[str] = None, new_creation_date: int = None, new_logo: Optional[str] = None, new_instagram: Optional[str] = None, new_website_link: Optional[str] = None) -> StudentOrganization:
         """
         If stu_org_id not found raise NoItemsFound
         """

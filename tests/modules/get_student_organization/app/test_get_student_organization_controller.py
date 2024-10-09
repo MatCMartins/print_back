@@ -31,7 +31,7 @@ class Test_GetStudentOrganizationController:
         response = controller(request)
 
         assert response.status_code == 400
-        assert response.body == "No items found for stu_org_id"
+        assert response.body == "No items found for Student Organization"
     
     def test_get_student_organization_controller_wrong_parameter_type(self):
         usecase = GetStudentOrganizationsUsecase(repo)
