@@ -16,7 +16,7 @@ class GetStudentOrganizationController:
                 raise MissingParameters("stu_org_id")
             
             if type(request.data.get('stu_org_id')) is not str:
-                raise WrongTypeParameter("stu_org_id", str)
+                raise WrongTypeParameter("stu_org_id", str, type(request.data.get('stu_org_id')))
             
             stu_org = self.usecase(request.data.get('stu_org_id'))
 
@@ -31,11 +31,12 @@ class GetStudentOrganizationController:
             )
 
             return OK(viewmodel.to_dict())
+        except NoItemsFound as e:
+            return BadRequest(body=e.message)
         except MissingParameters as e:
-            return BadRequest(e.to_dict())
+            return BadRequest(body=e.message)
         except WrongTypeParameter as e:
-            return BadRequest(e.to_dict())
+            return BadRequest(body=e.message)
         except Exception as e:
-            return InternalServerError({"message": str(e)})
-
+            return InternalServerError(body=e.args[0])
 
