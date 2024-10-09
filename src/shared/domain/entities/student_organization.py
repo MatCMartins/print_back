@@ -52,7 +52,6 @@ class StudentOrganization(abc.ABC):
 
     @staticmethod
     def validate_creation_date(param: int) -> bool:
-        print(param, type(param))
         if param is None:
             return False
         elif type(param) != int:

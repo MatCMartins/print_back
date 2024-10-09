@@ -3,7 +3,7 @@ from .get_student_organization_viewmodel import GetStudentOrganizationViewmodel
 from src.shared.domain.repositories.student_organization_repository_interface import IStudentOrganizationRepository
 from src.shared.helpers.errors.usecase_errors import NoItemsFound
 from src.shared.helpers.errors.controller_errors import MissingParameters, WrongTypeParameter
-from src.shared.helpers.external_interfaces.external_interface import IRequest, IResponse, IController
+from src.shared.helpers.external_interfaces.external_interface import IRequest, IResponse
 from src.shared.helpers.external_interfaces.http_codes import OK, BadRequest, NotFound, InternalServerError
 
 class GetStudentOrganizationController:
