@@ -32,7 +32,7 @@ class CourseRepositoryMock(ICourseRepository):
                 coordinator="Carla Williams",
                 coordinator_photo="https://example.com/carla_photo.jpg",
                 description="Explore strategies for product promotion and brand management.",
-                link=None  # Sem link opcionalmente
+                link=None 
             )
             ]
     
