@@ -16,7 +16,6 @@ class DeleteStudentOrganizationController:
             
             if type(request.data.get('stu_org_id')) is not str:
                 raise WrongTypeParameter("stu_org_id", str, type(request.data.get('stu_org_id')))
-            
             stu_org = self.usecase(request.data.get('stu_org_id'))
 
             viewmodel = DeleteStudentOrganizationViewmodel(

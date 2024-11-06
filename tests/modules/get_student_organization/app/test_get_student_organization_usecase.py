@@ -1,11 +1,11 @@
-from src.modules.get_student_organization.app.get_student_organization_usecase import GetStudentOrganizationsUsecase
+from src.modules.get_student_organization.app.get_student_organization_usecase import GetStudentOrganizationUsecase
 from src.shared.infra.repositories.student_organization_repository_mock import StudentOrganizationRepositoryMock
 
 repo = StudentOrganizationRepositoryMock()
 
 class Test_GetStudentOrganizationUsecase:
     def test_get_student_organization_usecase(self):
-        usecase = GetStudentOrganizationsUsecase(repo)
+        usecase = GetStudentOrganizationUsecase(repo)
 
         stu_org = usecase(repo.stu_orgs[0].stu_org_id)
 
