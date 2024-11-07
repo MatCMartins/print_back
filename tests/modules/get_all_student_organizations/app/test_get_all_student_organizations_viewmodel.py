@@ -2,8 +2,8 @@ from src.modules.get_all_student_organizations.app.get_all_student_organizations
 from src.shared.infra.repositories.student_organization_repository_mock import StudentOrganizationRepositoryMock
  
 
-class Test_GetStudentOrganizationViewmodel:
-    def test_get_student_organization_viewmodel(self):
+class Test_GetAllStudentOrganizationsViewmodel:
+    def test_get_all_student_organizations_viewmodel(self):
         stu_orgs = StudentOrganizationRepositoryMock().stu_orgs
         viewmodel = GetAllStudentOrganizationsViewmodel(stu_orgs).to_dict()
         expected = {"student_organizations":

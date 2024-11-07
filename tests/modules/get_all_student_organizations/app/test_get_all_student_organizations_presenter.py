@@ -7,7 +7,7 @@ from src.shared.infra.repositories.student_organization_repository_mock import S
 
 class Test_GetAllStudentOrganizationsPresenter:
 
-    def test_get_student_organization_presenter(self):
+    def test_get_all_student_organizations_presenter(self):
         event = {
             "version": "2.0",
             "routeKey": "$default",

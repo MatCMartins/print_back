@@ -55,8 +55,6 @@ class Test_StudentOrganizationRepositoryMock:
         assert stu_org.name == "Data Science Club IMT"
         assert len(repo.stu_orgs) == 2
 
-
-
     def test_delete_stu_org_not_found(self):
         repo = StudentOrganizationRepositoryMock()
         assert repo.delete_stu_org(32) == None

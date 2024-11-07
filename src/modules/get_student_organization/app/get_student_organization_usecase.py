@@ -4,7 +4,7 @@ from src.shared.helpers.errors.usecase_errors import NoItemsFound
 
 
 
-class GetStudentOrganizationsUsecase:
+class GetStudentOrganizationUsecase:
 
     def __init__(self, repo: IStudentOrganizationRepository):
         self.repo = repo
