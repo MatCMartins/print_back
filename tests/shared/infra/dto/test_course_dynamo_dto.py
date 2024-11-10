@@ -1,5 +1,3 @@
-
-
 from src.shared.domain.entities.course import Course
 from src.shared.domain.enums.state_enum import STATE
 from src.shared.infra.dto.course_dynamo_dto import CourseDynamoDTO
