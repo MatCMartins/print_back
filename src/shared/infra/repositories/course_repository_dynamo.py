@@ -45,9 +45,9 @@ class CourseRepositoryDynamo(ICourseRepository):
 
 
     def create_course(self, new_course: Course) -> Course:
-        stu_dto = CourseDynamoDTO.from_entity(course=new_course)
+        course_dto = CourseDynamoDTO.from_entity(course=new_course)
         resp = self.dynamo.put_item(partition_key=self.partition_key_format(new_course.course_id),
-                                    sort_key=self.sort_key_format(course_id=new_course.course_id), item=stu_dto.to_dynamo())
+                                    sort_key=self.sort_key_format(course_id=new_course.course_id), item=course_dto.to_dynamo())
         return new_course
 
     def delete_course(self, course_id: int) -> Course:
