@@ -1,5 +1,5 @@
 import abc
-import hashlib
+import uuid
 from typing import Optional, Dict
 from src.shared.helpers.errors.domain_errors import EntityError
 
@@ -48,7 +48,7 @@ class event(abc.ABC):
             raise EntityError("Field Invalid subscribers")
         self.subscribers = subscribers
 
-        self.event_id = hashlib.md5((name + str(creation_date)).encode()).hexdigest()
+        self.event_id = str(uuid.uuid4())
 
     @staticmethod
     def validate_string(param: str) -> bool:
