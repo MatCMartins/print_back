@@ -3,18 +3,17 @@ import uuid
 from typing import Optional, Dict
 from src.shared.helpers.errors.domain_errors import EntityError
 
-class event(abc.ABC):
+class Event(abc.ABC):
     event_id: str
     name: str
     description: str
-    creation_date: int
     banner: Optional[str]
     start_date: int
     end_date: int
     rooms: Dict[str, int]
     subscribers: Dict[str, str]
 
-    def __init__(self, name: str, description: str, creation_date: int, banner: Optional[str], start_date: int, end_date: int, rooms: Dict[str, int], subscribers: Dict[str, str]):
+    def __init__(self, name: str, description: str, banner: Optional[str], start_date: int, end_date: int, rooms: Dict[str, int], subscribers: Dict[str, str]):
 
         if not self.validate_string(name):
             raise EntityError("Field Invalid name")
@@ -23,10 +22,6 @@ class event(abc.ABC):
         if not self.validate_string(description):
             raise EntityError("Field Invalid description")
         self.description = description
-
-        if not self.validate_date(creation_date):
-            raise EntityError("Field Invalid creation_date")
-        self.creation_date = creation_date
 
         if banner is not None and not self.validate_string(banner):
             raise EntityError("Field Invalid banner")
@@ -83,7 +78,6 @@ class event(abc.ABC):
             "event_id": self.event_id,
             "name": self.name,
             "description": self.description,
-            "creation_date": self.creation_date,
             "banner": self.banner,
             "start_date": self.start_date,
             "end_date": self.end_date,
@@ -92,4 +86,4 @@ class event(abc.ABC):
         }
 
     def __repr__(self):
-        return f"Event(event_id={self.event_id}, name={self.name}, description={self.description}, creation_date={self.creation_date}, banner={self.banner}, start_date={self.start_date}, end_date={self.end_date}, rooms={self.rooms}, subscribers={self.subscribers})"
+        return f"Event(event_id={self.event_id}, name={self.name}, description={self.description}, banner={self.banner}, start_date={self.start_date}, end_date={self.end_date}, rooms={self.rooms}, subscribers={self.subscribers})"
