@@ -5,7 +5,7 @@ from src.modules.create_student_organization.app.create_student_organization_pre
 
 class Test_CreateStudentOrganizationPresenter:
 
-    def test_get_student_organization_presenter(self):
+    def test_create_student_organization_presenter(self):
         event = {
             "version": "2.0",
             "routeKey": "$default",

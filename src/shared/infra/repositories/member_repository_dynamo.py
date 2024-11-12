@@ -1,0 +1,53 @@
+
+from typing import List, Optional
+
+from src.shared.domain.entities.member import Member
+from src.shared.domain.repositories.member_repository_interface import IMemberRepository
+from src.shared.environments import Environments
+from src.shared.helpers.errors.usecase_errors import NoItemsFound
+from src.shared.infra.dto.member_dynamo_dto import MemberDynamoDTO
+from src.shared.infra.external.dynamo.datasources.dynamo_datasource import DynamoDatasource
+
+
+class MemberRepositoryDynamo(IMemberRepository):
+
+    @staticmethod
+    def partition_key_format(member_id) -> str:
+        return f"member#{member_id}"
+
+    @staticmethod
+    def sort_key_format(member_id: int) -> str:
+        return f"#{member_id}"
+
+    def __init__(self):
+        self.dynamo = DynamoDatasource(endpoint_url=Environments.get_envs().endpoint_url,
+                                       dynamo_table_name=Environments.get_envs().dynamo_table_name,
+                                       region=Environments.get_envs().region,
+                                       partition_key=Environments.get_envs().dynamo_partition_key,
+                                       sort_key=Environments.get_envs().dynamo_sort_key)
+    def get_member(self, member_id: int) -> Member:
+        resp = self.dynamo.get_item(partition_key=self.partition_key_format(member_id), sort_key=self.sort_key_format(member_id))
+
+        if resp.get('Item') is None:
+            raise NoItemsFound("member_id")
+
+        member_dto = MemberDynamoDTO.from_dynamo(resp["Item"])
+        return member_dto.to_entity()
+
+    def get_all_members(self) -> List[Member]:
+        resp = self.dynamo.get_all_items()
+        members = []
+        for item in resp['Items']:
+            if item.get("entity") == 'student_organization':
+                members.append(MemberDynamoDTO.from_dynamo(item).to_entity())
+
+        return members
+
+
+    def create_member(self, new_member: Member) -> Member:
+        member_dto = MemberDynamoDTO.from_entity(member=new_member)
+        resp = self.dynamo.put_item(partition_key=self.partition_key_format(new_member.member_id),
+                                    sort_key=self.sort_key_format(member_id=new_member.member_id), item=member_dto.to_dynamo())
+        return new_member
+
+    

@@ -1,4 +1,4 @@
-from .get_student_organization_usecase import GetStudentOrganizationsUsecase
+from .get_student_organization_usecase import GetStudentOrganizationUsecase
 from .get_student_organization_viewmodel import GetStudentOrganizationViewmodel
 from src.shared.domain.repositories.student_organization_repository_interface import IStudentOrganizationRepository
 from src.shared.helpers.errors.usecase_errors import NoItemsFound
@@ -8,7 +8,7 @@ from src.shared.helpers.external_interfaces.http_codes import OK, BadRequest, No
 
 class GetStudentOrganizationController:
 
-    def __init__(self, usecase: GetStudentOrganizationsUsecase):
+    def __init__(self, usecase: GetStudentOrganizationUsecase):
         self.usecase = usecase
     def __call__(self, request: IRequest) -> IResponse:
         try:

@@ -1,7 +1,3 @@
-from src.shared.domain.entities.student_organization import StudentOrganization
-
-
-
 class GetStudentOrganizationViewmodel:
     stu_org_id: str
     name: str

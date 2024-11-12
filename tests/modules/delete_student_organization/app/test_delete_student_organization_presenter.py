@@ -62,6 +62,7 @@ class Test_DeleteStudentOrganizationPresenter:
         }
 
         response = lambda_handler(event, None)
+        print(response)
         assert response["statusCode"] == 200
         assert json.loads(response["body"])["name"] == "Data Science Club IMT"
         assert json.loads(response["body"])["description"] == "Organization dedicated to promoting knowledge and projects in the field of data science and machine learning."

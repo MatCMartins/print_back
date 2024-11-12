@@ -3,8 +3,8 @@ from src.shared.infra.repositories.student_organization_repository_mock import S
 
 repo = StudentOrganizationRepositoryMock()
 
-class Test_StudentOrganizationUsecase:
-    def test_get_student_organization_usecase(self):
+class Test_GetAllStudentOrganizationsUsecase:
+    def test_get_all_student_organizations_usecase(self):
         usecase = GetAllStudentOrganizationsUsecase(repo)
 
         stu_org = usecase()
