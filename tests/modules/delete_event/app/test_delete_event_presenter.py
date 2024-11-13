@@ -1,7 +1,9 @@
 from typing import List, Optional
+from uuid import uuid4
 from src.shared.domain.entities.event import Event
 from src.shared.domain.repositories.event_repository_interface import IEventRepository
 from src.shared.helpers.errors.usecase_errors import NoItemsFound
+
 
 class EventRepositoryMock(IEventRepository):
     events: List[Event]
@@ -9,7 +11,7 @@ class EventRepositoryMock(IEventRepository):
     def __init__(self):
         self.events = [
             Event(
-                event_id="7d644e62-ef8b-4728-a92b-becb8930c24e",
+                event_id=str(uuid4()),
                 name="Tech Conference 2023",
                 description="A conference for tech enthusiasts to discuss the latest trends in technology.",
                 banner="https://techconference.com/banner.png",
@@ -19,7 +21,7 @@ class EventRepositoryMock(IEventRepository):
                 subscribers={"user1": "Main Hall", "user2": "Workshop Room 1"}
             ),
             Event(
-                event_id="7d644e62-ef8b-4728-a92b-becb8930c24e",
+                event_id=str(uuid4()),
                 name="AI Symposium",
                 description="An event focused on advancements and applications in artificial intelligence.",
                 banner="https://aisymposium.com/banner.png",
@@ -29,7 +31,7 @@ class EventRepositoryMock(IEventRepository):
                 subscribers={"user3": "Auditorium", "user4": "Lab 1"}
             ),
             Event(
-                event_id="7d644e62-ef8b-4728-a92b-becb8930c24e",
+                event_id=str(uuid4()),
                 name="Robotics Competition",
                 description="Annual competition for robotics teams from various universities.",
                 banner="https://roboticscompetition.com/banner.png",

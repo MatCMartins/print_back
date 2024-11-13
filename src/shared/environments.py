@@ -5,6 +5,7 @@ import os
 from src.shared.domain.repositories.member_repository_interface import IMemberRepository
 from src.shared.domain.repositories.student_organization_repository_interface import IStudentOrganizationRepository
 from src.shared.domain.repositories.course_repository_interface import ICourseRepository
+from src.shared.domain.repositories.event_repository_interface import IEventRepository
 
 
 class STAGE(Enum):
@@ -29,7 +30,7 @@ class Environments:
     dynamo_table_name: str
     dynamo_partition_key: str
     dynamo_sort_key: str
-    cloud_frontget_user_presenter_distribution_domain: str
+    cloud_front_distribution_domain: str
     mss_name: str 
 
     def _configure_local(self):
@@ -71,6 +72,18 @@ class Environments:
             return StudentOrganizationRepositoryDynamo
         else:
             raise Exception("No repository found for this stage")
+    
+    @staticmethod
+    def get_event_repo() -> IEventRepository:
+        if Environments.get_envs().stage == STAGE.TEST:
+            from src.shared.infra.repositories.event_repository_mock import EventRepositoryMock
+            return EventRepositoryMock
+        elif Environments.get_envs().stage in [STAGE.DEV, STAGE.HOMOLOG, STAGE.PROD]:
+            from src.shared.infra.repositories.event_repository_dynamo import EventRepositoryDynamo
+            return EventRepositoryDynamo
+        else:
+            raise Exception("No repository found for this stage")
+
     @staticmethod
     def get_course_repo() -> ICourseRepository:
         if Environments.get_envs().stage == STAGE.TEST:
@@ -81,6 +94,7 @@ class Environments:
             return CourseRepositoryDynamo
         else:
             raise Exception("No repository found for this stage")
+
     @staticmethod
     def get_member_repo() -> IMemberRepository:
         if Environments.get_envs().stage == STAGE.TEST:
@@ -91,6 +105,7 @@ class Environments:
             return MemberRepositoryDynamo
         else:
             raise Exception("No repository found for this stage")
+    
     @staticmethod
     def get_envs() -> "Environments":
         """
@@ -104,4 +119,3 @@ class Environments:
 
     def __repr__(self):
         return self.__dict__
-

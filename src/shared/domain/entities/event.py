@@ -13,7 +13,7 @@ class Event(abc.ABC):
     rooms: Dict[str, int]
     subscribers: Dict[str, str]
 
-    def __init__(self, name: str, description: str, banner: Optional[str], start_date: int, end_date: int, rooms: Dict[str, int], subscribers: Dict[str, str]):
+    def __init__(self, name: str, description: str, banner: Optional[str], start_date: int, end_date: int, rooms: Dict[str, int], subscribers: Dict[str, str], event_id: Optional[str] = None):
 
         if not self.validate_string(name):
             raise EntityError("Field Invalid name")
@@ -43,7 +43,7 @@ class Event(abc.ABC):
             raise EntityError("Field Invalid subscribers")
         self.subscribers = subscribers
 
-        self.event_id = str(uuid.uuid4())
+        self.event_id = event_id or str(uuid.uuid4())
 
     @staticmethod
     def validate_string(param: str) -> bool:
