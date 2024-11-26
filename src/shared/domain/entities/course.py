@@ -1,5 +1,5 @@
 import abc
-import hashlib
+import uuid
 from typing import Optional
 
 from src.shared.helpers.errors.domain_errors import EntityError
@@ -13,7 +13,7 @@ class Course(abc.ABC):
     description: str
     link: Optional[str] = None
 
-    def __init__(self, name: str, course_photo: str, coordinator: str, coordinator_photo: str,description: str, link: Optional[str] = None):
+    def __init__(self, name: str, course_photo: str, coordinator: str, coordinator_photo: str,description: str, link: Optional[str] = None, course_id: Optional[str] = None):
 
         if not self.validate_parameters(name):
             raise EntityError("Invalid name")
@@ -41,7 +41,7 @@ class Course(abc.ABC):
 
         
         
-        self.course_id = hashlib.md5((name).encode()).hexdigest()
+        self.course_id = course_id or str(uuid.uuid4())
         
     @staticmethod
     def validate_parameters(param: str) -> bool:
@@ -70,4 +70,4 @@ class Course(abc.ABC):
             "link": self.link
         }
     def __repr__(self):
-        return f"StudentOrganization(course_id={self.course_id}, name={self.name}, course_photo={self.course_photo}, coordinator={self.coordinator}, coordinator_photo={self.coordinator_photo}, description={self.description}, link={self.link})"
+        return f"Course(course_id={self.course_id}, name={self.name}, course_photo={self.course_photo}, coordinator={self.coordinator}, coordinator_photo={self.coordinator_photo}, description={self.description}, link={self.link})"

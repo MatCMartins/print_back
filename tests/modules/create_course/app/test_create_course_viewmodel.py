@@ -1,4 +1,4 @@
-import hashlib
+import re
 from src.modules.create_course.app.create_course_viewmodel import CreateCourseViewModel
 from src.shared.domain.entities.course import Course
 
@@ -24,8 +24,10 @@ class Test_CreateCourseViewmodel:
             link=course.link
         )
 
+        assert re.match(r'^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$', viewmodel.to_dict()["course_id"])
+
         expected = {
-            "course_id": hashlib.md5(("Enactus IMT").encode()).hexdigest(),
+            "course_id": course.course_id,
             "name": "Enactus IMT",
             "description": "Enactus IMT is a student organization that aims to develop projects that help the community.",
             "course_photo": "https://enactusimt.com/logo.png",

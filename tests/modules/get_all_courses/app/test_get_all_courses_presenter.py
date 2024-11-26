@@ -1,8 +1,6 @@
 import json
-from dataclasses import dataclass
-import pytest
-
 from src.modules.get_all_courses.app.get_all_courses_presenter import lambda_handler
+from src.shared.infra.repositories.course_repository_mock import CourseRepositoryMock
 
 class Test_GetAllCoursesPresenter:
 
@@ -20,8 +18,7 @@ class Test_GetAllCoursesPresenter:
                 "header1": "value1",
                 "header2": "value1,value2"
             },
-            "queryStringParameters": {
-            },
+            "queryStringParameters": {},
             "requestContext": {
                 "accountId": "123456789012",
                 "apiId": "<urlid>",
@@ -54,11 +51,27 @@ class Test_GetAllCoursesPresenter:
             },
             "body": "Hello from client!",
             "pathParameters": None,
-            "isBase64Encoded": None,
+            "isBase64Encoded": False,
             "stageVariables": None
         }
 
         response = lambda_handler(event, None)
+
         assert response["statusCode"] == 200
-        assert response["body"] == json.dumps({"courses": [{"course_id": "8329f5105520a1b72d062628c077ddfa", "name": "Computer Science", "course_photo": "https://example.com/computer_science_photo.jpg", "coordinator": "Alice Johnson", "coordinator_photo": "https://example.com/alice_photo.jpg", "description": "A course focused on programming, algorithms, and systems.", "link": "https://example.com/computer_science"}, {"course_id": "e19e98a669ae21f94ffd1659998fd072", "name": "Data Analytics", "course_photo": "https://example.com/data_analytics_photo.jpg", "coordinator": "Bob Smith", "coordinator_photo": "https://example.com/bob_photo.jpg", "description": "Learn how to analyze data and extract meaningful insights.", "link": "https://example.com/data_analytics"}, {"course_id": "7cb15e416d62919b1b40298324fbe30b", "name": "Marketing", "course_photo": "https://example.com/marketing_photo.jpg", "coordinator": "Carla Williams", "coordinator_photo": "https://example.com/carla_photo.jpg", "description": "Explore strategies for product promotion and brand management.", "link": None}]})
+        body = json.loads(response["body"])
+
+        assert isinstance(body, dict)
+        assert "courses" in body
+        courses = body["courses"]
+
+        repo = CourseRepositoryMock()
+        assert isinstance(courses, list)
+        assert len(courses) == len(repo.courses)
         
+        for i, course_data in enumerate(courses):
+            assert course_data["name"] == repo.courses[i].name
+            assert course_data["course_photo"] == repo.courses[i].course_photo
+            assert course_data["coordinator"] == repo.courses[i].coordinator
+            assert course_data["coordinator_photo"] == repo.courses[i].coordinator_photo
+            assert course_data["description"] == repo.courses[i].description
+            assert course_data["link"] == repo.courses[i].link

@@ -16,7 +16,7 @@ class CourseRepositoryDynamo(ICourseRepository):
         return f"course#{course_id}"
 
     @staticmethod
-    def sort_key_format(course_id: int) -> str:
+    def sort_key_format(course_id: str) -> str:
         return f"#{course_id}"
 
     def __init__(self):
@@ -25,8 +25,11 @@ class CourseRepositoryDynamo(ICourseRepository):
                                        region=Environments.get_envs().region,
                                        partition_key=Environments.get_envs().dynamo_partition_key,
                                        sort_key=Environments.get_envs().dynamo_sort_key)
-    def get_course(self, course_id: int) -> Course:
-        resp = self.dynamo.get_item(partition_key=self.partition_key_format(course_id), sort_key=self.sort_key_format(course_id))
+    def get_course(self, course_id: str) -> Course:
+        resp = self.dynamo.get_item(
+            partition_key=self.partition_key_format(course_id),
+            sort_key=self.sort_key_format(course_id)
+        )
 
         if resp.get('Item') is None:
             raise NoItemsFound("course_id")
@@ -50,7 +53,7 @@ class CourseRepositoryDynamo(ICourseRepository):
                                     sort_key=self.sort_key_format(course_id=new_course.course_id), item=course_dto.to_dynamo())
         return new_course
 
-    def delete_course(self, course_id: int) -> Course:
+    def delete_course(self, course_id: str) -> Course:
         resp = self.dynamo.delete_item(partition_key=self.partition_key_format(course_id), sort_key=self.sort_key_format(course_id))
 
         if "Attributes" not in resp:

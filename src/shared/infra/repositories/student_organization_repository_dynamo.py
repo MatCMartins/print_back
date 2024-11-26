@@ -16,7 +16,7 @@ class StudentOrganizationRepositoryDynamo(IStudentOrganizationRepository):
         return f"stu_org#{stu_org_id}"
 
     @staticmethod
-    def sort_key_format(stu_org_id: int) -> str:
+    def sort_key_format(stu_org_id: str) -> str:
         return f"#{stu_org_id}"
 
     def __init__(self):
@@ -25,7 +25,7 @@ class StudentOrganizationRepositoryDynamo(IStudentOrganizationRepository):
                                        region=Environments.get_envs().region,
                                        partition_key=Environments.get_envs().dynamo_partition_key,
                                        sort_key=Environments.get_envs().dynamo_sort_key)
-    def get_stu_org(self, stu_org_id: int) -> StudentOrganization:
+    def get_stu_org(self, stu_org_id: str) -> StudentOrganization:
         resp = self.dynamo.get_item(partition_key=self.partition_key_format(stu_org_id), sort_key=self.sort_key_format(stu_org_id))
 
         if resp.get('Item') is None:
@@ -50,7 +50,7 @@ class StudentOrganizationRepositoryDynamo(IStudentOrganizationRepository):
                                     sort_key=self.sort_key_format(stu_org_id=new_stu_org.stu_org_id), item=stu_dto.to_dynamo())
         return new_stu_org
 
-    def delete_stu_org(self, stu_org_id: int) -> StudentOrganization:
+    def delete_stu_org(self, stu_org_id: str) -> StudentOrganization:
         resp = self.dynamo.delete_item(partition_key=self.partition_key_format(stu_org_id), sort_key=self.sort_key_format(stu_org_id))
 
         if "Attributes" not in resp:
@@ -58,7 +58,7 @@ class StudentOrganizationRepositoryDynamo(IStudentOrganizationRepository):
 
         return StudentOrganizationDynamoDTO.from_dynamo(resp['Attributes']).to_entity()
 
-    def update_stu_org(self, stu_org_id: int, new_name: Optional[str] = None, new_description: Optional[str] = None, new_creation_date: int = None, new_logo: Optional[str] = None, new_instagram: Optional[str] = None, new_website_link: Optional[str] = None) -> StudentOrganization:
+    def update_stu_org(self, stu_org_id: str, new_name: Optional[str] = None, new_description: Optional[str] = None, new_creation_date: int = None, new_logo: Optional[str] = None, new_instagram: Optional[str] = None, new_website_link: Optional[str] = None) -> StudentOrganization:
         item_to_update = {}
 
         if new_name is not None:

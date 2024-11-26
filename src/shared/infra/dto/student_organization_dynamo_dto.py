@@ -4,7 +4,7 @@ from src.shared.domain.enums.state_enum import STATE
 
 
 class StudentOrganizationDynamoDTO:
-    stu_org_id: int
+    stu_org_id: str
     name: str
     description: str
     creation_date: int
@@ -12,7 +12,7 @@ class StudentOrganizationDynamoDTO:
     instagram: str
     website_link: str
 
-    def __init__(self, stu_org_id: int, name: str, description: str, creation_date: int, logo: str, instagram: str, website_link: str):
+    def __init__(self, stu_org_id: str, name: str, description: str, creation_date: int, logo: str, instagram: str, website_link: str):
         self.stu_org_id = stu_org_id
         self.name = name
         self.description = description

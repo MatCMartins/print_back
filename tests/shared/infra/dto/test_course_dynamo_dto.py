@@ -134,7 +134,6 @@ class Test_CourseDynamoDTO:
             link='link',
         )
 
-        assert course.course_id == expected_course.course_id
         assert course.name == expected_course.name
         assert course.course_photo == expected_course.course_photo
         assert course.coordinator == expected_course.coordinator

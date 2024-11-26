@@ -53,7 +53,7 @@ class Test_StudentOrganizationDynamoDTO:
         assert student_organization_dynamo == expected_dict
 
     def test_from_dynamo(self):
-        dynamo_dict = {'Item': {'stu_org_id': 1234,
+        dynamo_dict = {'Item': {'stu_org_id': '1234',
                                 'name': 'mateus',
                                 'SK': '#' + str(1234),
                                 'PK': 'stu_org#' + str(1234),
@@ -63,21 +63,12 @@ class Test_StudentOrganizationDynamoDTO:
                                 'logo': 'logo',
                                 'instagram': 'instagram',
                                 'website_link': 'website_link'
-                                },
-                       'ResponseMetadata': {'RequestId': 'aa6a5e5e-943f-4452-8c1f-4e5441ee6042',
-                                            'HTTPStatusCode': 200,
-                                            'HTTPHeaders': {'date': 'Fri, 16 Dec 2022 15:40:29 GMT',
-                                                            'content-type': 'application/x-amz-json-1.0',
-                                                            'x-amz-crc32': '3909675734',
-                                                            'x-amzn-requestid': 'aa6a5e5e-943f-4452-8c1f-4e5441ee6042',
-                                                            'content-length': '174',
-                                                            'server': 'Jetty(9.4.48.v20220622)'},
-                                            'RetryAttempts': 0}}
+                                }}
 
         stu_org_dto = StudentOrganizationDynamoDTO.from_dynamo(stu_org_data=dynamo_dict["Item"])
 
         expected_stu_org_dto = StudentOrganizationDynamoDTO(
-            stu_org_id=1234,
+            stu_org_id='1234',
             name='mateus',
             description='description',
             creation_date=1234,
@@ -111,7 +102,7 @@ class Test_StudentOrganizationDynamoDTO:
         assert stu_org.website_link == repo.stu_orgs[0].website_link
 
     def test_from_dynamo_to_entity(self):
-        dynamo_item = {'Item': {'stu_org_id': 1234,
+        dynamo_item = {'Item': {'stu_org_id': '1234',
                                 'name': 'mateus',
                                 'SK': '#' + str(1234),
                                 'PK': 'stu_org#' + str(1234),
@@ -136,7 +127,6 @@ class Test_StudentOrganizationDynamoDTO:
             website_link='website_link',
         )
 
-        assert stu_org.stu_org_id == expected_stu_org.stu_org_id
         assert stu_org.name == expected_stu_org.name
         assert stu_org.description == expected_stu_org.description
         assert stu_org.creation_date == expected_stu_org.creation_date

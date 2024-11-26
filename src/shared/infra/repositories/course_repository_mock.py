@@ -11,6 +11,7 @@ class CourseRepositoryMock(ICourseRepository):
         def __init__(self):
             self.courses = [
                 Course(
+                course_id="7d644e62-ef8b-4728-a92b-becb8930c24e",
                 name="Computer Science",
                 course_photo="https://example.com/computer_science_photo.jpg",
                 coordinator="Alice Johnson",
@@ -19,6 +20,7 @@ class CourseRepositoryMock(ICourseRepository):
                 link="https://example.com/computer_science"
             ),
                 Course(
+                course_id="7d644e62-ef8b-4728-a92b-becb8930c24b",
                 name="Data Analytics",
                 course_photo="https://example.com/data_analytics_photo.jpg",
                 coordinator="Bob Smith",
@@ -27,6 +29,7 @@ class CourseRepositoryMock(ICourseRepository):
                 link="https://example.com/data_analytics"
             ),
                 Course(
+                course_id="7d644e62-ef8b-4728-a92b-becb8930c24a",
                 name="Marketing",
                 course_photo="https://example.com/marketing_photo.jpg",
                 coordinator="Carla Williams",

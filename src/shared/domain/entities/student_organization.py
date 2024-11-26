@@ -1,5 +1,6 @@
 import abc
-import hashlib
+import uuid
+from typing import Optional
 
 from src.shared.domain.enums.state_enum import STATE
 from src.shared.helpers.errors.domain_errors import EntityError
@@ -13,7 +14,7 @@ class StudentOrganization(abc.ABC):
     instagram: str
     website_link: str
 
-    def __init__(self, name: str, description: str, creation_date: int, logo: str, instagram: str, website_link: str):
+    def __init__(self, name: str, description: str, creation_date: int, logo: str, instagram: str, website_link: str, stu_org_id: Optional[str] = None):
 
         if not self.validate_parameters(name):
             raise EntityError("Invalid name")
@@ -40,7 +41,7 @@ class StudentOrganization(abc.ABC):
         self.website_link = website_link
 
         
-        self.stu_org_id = hashlib.md5((name + str(creation_date)).encode()).hexdigest()
+        self.stu_org_id = stu_org_id or str(uuid.uuid4())
         
     @staticmethod
     def validate_parameters(param: str) -> bool:

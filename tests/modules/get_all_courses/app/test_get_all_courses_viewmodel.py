@@ -9,7 +9,7 @@ class Test_GetAllCoursesViewmodel:
         expected = {"courses":
             [
                 {
-                    "course_id": "8329f5105520a1b72d062628c077ddfa",
+                    "course_id": courses[0].course_id,
                     "name": "Computer Science",
                     "course_photo": "https://example.com/computer_science_photo.jpg",
                     "coordinator": "Alice Johnson",
@@ -18,7 +18,7 @@ class Test_GetAllCoursesViewmodel:
                     "link": "https://example.com/computer_science"
                 },
                 {
-                    "course_id": "e19e98a669ae21f94ffd1659998fd072",
+                    "course_id": courses[1].course_id,
                     "name": "Data Analytics",
                     "course_photo": "https://example.com/data_analytics_photo.jpg",
                     "coordinator": "Bob Smith",
@@ -27,7 +27,7 @@ class Test_GetAllCoursesViewmodel:
                     "link": "https://example.com/data_analytics"
                 },
                 {
-                    "course_id": "7cb15e416d62919b1b40298324fbe30b",
+                    "course_id": courses[2].course_id,
                     "name": "Marketing",
                     "course_photo": "https://example.com/marketing_photo.jpg",
                     "coordinator": "Carla Williams",

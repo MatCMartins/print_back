@@ -1,4 +1,4 @@
-import hashlib
+import re
 from src.modules.create_student_organization.app.create_student_organization_viewmodel import CreateStudentOrganizationViewModel
 from src.shared.domain.entities.student_organization import StudentOrganization
 
@@ -23,8 +23,10 @@ class Test_CreateStudentOrganizationViewmodel:
             website_link=stu_org.website_link
         )
 
+        assert re.match(r'^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$', viewmodel.to_dict()["stu_org_id"])
+
         expected = {
-            "stu_org_id": hashlib.md5(("Enactus IMT" + str(123456789)).encode()).hexdigest(),
+            "stu_org_id": stu_org.stu_org_id,
             "name": "Enactus IMT",
             "description": "Enactus IMT is a student organization that aims to develop projects that help the community.",
             "creation_date": 123456789,
