@@ -1,6 +1,6 @@
 import os
 from aws_cdk import Stack
-from aws_cdk.aws_apigateway import RestApi, Cors, CfnAuthorizer
+from aws_cdk.aws_apigateway import RestApi, Cors, CfnAuthorizer, AuthorizationType
 from constructs import Construct
 
 from .dynamo_stack import DynamoStack
@@ -62,7 +62,7 @@ class IacStack(Stack):
         # Associar o autorizer ao recurso da API
         api_gateway_resource.add_method(
             "GET",
-            authorization_type="CUSTOM",
+            authorization_type=AuthorizationType.CUSTOM,
             authorizer=azure_ad_authorizer,
         )
 
