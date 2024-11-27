@@ -63,7 +63,7 @@ class LambdaStack(Construct):
             self,
             f"{module_name}_lambda",
             code=lambda_.Code.from_asset(f"../src/modules/{module_name}"),
-            handler=f"{module_name}.handler",
+            handler=f"app.{module_name}_presenter.lambda_handler",
             runtime=lambda_.Runtime.PYTHON_3_9,
             environment=environment_variables,
             timeout=Duration.seconds(15),
