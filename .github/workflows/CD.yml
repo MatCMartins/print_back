@@ -37,6 +37,13 @@ jobs:
           cd iac
           pip install -r requirements.txt
 
+      - name: Bootstrap AWS environment
+        run: |
+          cdk bootstrap aws://${{ secrets.AWS_ACCOUNT_ID }}/${{ vars.AWS_REGION }}
+        env:
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+
       - name: Deploy with CDK
         run: |
           cd iac
