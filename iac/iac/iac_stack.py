@@ -4,7 +4,7 @@ from aws_cdk import (
     aws_iam,
 )
 from constructs import Construct
-from aws_cdk.aws_apigateway import RestApi, Cors
+from aws_cdk.aws_apigateway import RestApi, Cors, LambdaIntegration
 
 from .dynamo_stack import DynamoStack
 from .bucket_stack import BucketStack
@@ -25,16 +25,6 @@ class IacStack(Stack):
             "ApiGateway",
             rest_api_name="ApplicationAPI",
             description="API Gateway for the Application",
-            default_cors_preflight_options={
-                "allow_origins": Cors.ALL_ORIGINS,
-                "allow_methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-                "allow_headers": Cors.DEFAULT_HEADERS,
-            },
-        )
-
-        # Adicionando o recurso principal
-        api_gateway_resource = self.rest_api.root.add_resource(
-            "api",
             default_cors_preflight_options={
                 "allow_origins": Cors.ALL_ORIGINS,
                 "allow_methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -67,6 +57,33 @@ class IacStack(Stack):
             self, environment_variables=ENVIRONMENT_VARIABLES
         )
 
+        # Integração das funções Lambda com a API Gateway
+        self.add_api_integration("courses", {
+            "GET": self.lambda_stack.get_all_courses_function,
+            "POST": self.lambda_stack.create_course_function,
+            "PUT": self.lambda_stack.update_course_function,
+            "DELETE": self.lambda_stack.delete_course_function,
+        })
+
+        self.add_api_integration("events", {
+            "GET": self.lambda_stack.get_all_events_function,
+            "POST": self.lambda_stack.create_event_function,
+            "PUT": self.lambda_stack.update_event_function,
+            "DELETE": self.lambda_stack.delete_event_function,
+        })
+
+        self.add_api_integration("members", {
+            "GET": self.lambda_stack.get_all_members_function,
+            "POST": self.lambda_stack.create_member_function,
+        })
+
+        self.add_api_integration("student-organizations", {
+            "GET": self.lambda_stack.get_all_student_organizations_function,
+            "POST": self.lambda_stack.create_student_organization_function,
+            "PUT": self.lambda_stack.update_student_organization_function,
+            "DELETE": self.lambda_stack.delete_student_organization_function,
+        })
+
         # Permissões para DynamoDB
         for function in self.lambda_stack.functions_that_need_dynamo_permissions:
             self.dynamo_stack.dynamo_table_course.grant_read_write_data(function)
@@ -83,3 +100,15 @@ class IacStack(Stack):
 
         for function in self.lambda_stack.functions_that_need_dynamo_permissions:
             function.add_to_role_policy(s3_admin_policy)
+
+    def add_api_integration(self, path: str, methods_to_functions: dict):
+        """
+        Adiciona funções Lambda diretamente ao API Gateway para um endpoint específico.
+
+        :param path: O caminho do recurso na API.
+        :param methods_to_functions: Um dicionário onde as chaves são métodos HTTP e os valores são funções Lambda.
+        """
+        api_resource = self.rest_api.root.add_resource(path)
+        for method, lambda_function in methods_to_functions.items():
+            lambda_integration = LambdaIntegration(lambda_function)
+            api_resource.add_method(method, lambda_integration)
