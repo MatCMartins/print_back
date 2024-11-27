@@ -2,6 +2,7 @@ import os
 from aws_cdk import Stack
 from aws_cdk.aws_apigateway import RestApi, Cors, CfnAuthorizer, AuthorizationType, LambdaIntegration
 from constructs import Construct
+from aws_cdk.aws_lambda import Function, Runtime, Code
 
 from .dynamo_stack import DynamoStack
 from .bucket_stack import BucketStack
@@ -59,12 +60,13 @@ class IacStack(Stack):
             authorizer_uri=f"arn:aws:apigateway:{self.aws_region}:lambda:path/2015-03-31/functions/{validate_token_lambda.function_arn}/invocations",
         )
 
-        # Associar o authorizer ao recurso da API (usando seu ID)
+        # Associar o authorizer ao recurso da API
+        integration = LambdaIntegration(validate_token_lambda)
         api_gateway_resource.add_method(
             "GET",
-            integration=LambdaIntegration(validate_token_lambda),
+            integration=integration,
             authorization_type=AuthorizationType.CUSTOM,
-            authorizer_id=azure_ad_authorizer.ref,  # Referência direta ao ID do authorizer
+            authorizer=azure_ad_authorizer.ref,  # Referência direta ao ID do authorizer
         )
 
         # Criar stacks auxiliares
@@ -76,11 +78,11 @@ class IacStack(Stack):
             "STAGE": self.github_ref_name.upper(),
             "AZURE_AD_CLIENT_ID": self.client_id,
             "AZURE_AD_TENANT_ID": self.tenant_id,
+            "REGION": self.aws_region,
             "DYNAMO_TABLE_COURSE": self.dynamo_stack.dynamo_table_course.table_name,
             "DYNAMO_TABLE_EVENT": self.dynamo_stack.dynamo_table_event.table_name,
             "DYNAMO_TABLE_MEMBER": self.dynamo_stack.dynamo_table_member.table_name,
             "DYNAMO_TABLE_STU_ORG": self.dynamo_stack.dynamo_table_student_org.table_name,
-            "REGION": self.aws_region,
             "S3_BUCKET_COURSE": self.bucket_stack.course_bucket.bucket_name,
             "S3_BUCKET_EVENT": self.bucket_stack.event_bucket.bucket_name,
             "S3_BUCKET_MEMBER": self.bucket_stack.member_bucket.bucket_name,
@@ -97,8 +99,6 @@ class IacStack(Stack):
         """
         Cria a função Lambda para validar tokens JWT do Azure AD.
         """
-        from aws_cdk.aws_lambda import Function, Runtime, Code
-
         return Function(
             self,
             "ValidateTokenLambda",
