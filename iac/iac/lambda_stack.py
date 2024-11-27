@@ -6,13 +6,11 @@ from constructs import Construct
 
 
 class LambdaStack(Construct):
-    # Lista de funções que precisam de permissões específicas
     functions_that_need_dynamo_permissions = []
 
     def __init__(self, scope: Construct, environment_variables: dict) -> None:
         super().__init__(scope, "LambdaStack")
 
-        # Criar todas as funções Lambda
         self.create_course_function = self.create_lambda_function("create_course", environment_variables)
         self.create_event_function = self.create_lambda_function("create_event", environment_variables)
         self.create_member_function = self.create_lambda_function("create_member", environment_variables)
@@ -36,7 +34,6 @@ class LambdaStack(Construct):
         self.update_event_function = self.create_lambda_function("update_event", environment_variables)
         self.update_student_organization_function = self.create_lambda_function("update_student_organization", environment_variables)
 
-        # Registrar funções que precisam de permissões para DynamoDB
         self.functions_that_need_dynamo_permissions = [
             self.create_course_function,
             self.create_event_function,
