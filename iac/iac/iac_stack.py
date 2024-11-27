@@ -45,21 +45,21 @@ class IacStack(Stack):
             },
         )
 
-        # Configurar OIDC com Azure AD
-        azure_ad_oidc_provider = f"https://login.microsoftonline.com/{self.tenant_id}"
+        # Configurar Lambda para autenticação via Azure AD
+        validate_token_lambda = self.create_validate_token_lambda()
 
+        # Configurar Authorizer com a Lambda
         azure_ad_authorizer = CfnAuthorizer(
             self,
-            "AzureADAuthorizer",
-            name="AzureAD_OIDC",
+            "AzureADLambdaAuthorizer",
+            name="AzureAD_Lambda_Authorizer",
+            type="REQUEST",
             rest_api_id=self.rest_api.rest_api_id,
-            type="TOKEN",
             identity_source="method.request.header.Authorization",
-            authorizer_uri=f"{azure_ad_oidc_provider}/v2.0/token",
-            authorizer_result_ttl_in_seconds=300,
+            authorizer_uri=validate_token_lambda.function_arn,
         )
 
-        # Associar o autorizer ao recurso da API
+        # Associar o authorizer ao recurso da API
         api_gateway_resource.add_method(
             "GET",
             authorization_type=AuthorizationType.CUSTOM,
@@ -90,4 +90,22 @@ class IacStack(Stack):
         self.lambda_stack = LambdaStack(
             self,
             environment_variables=ENVIRONMENT_VARIABLES,
+        )
+
+    def create_validate_token_lambda(self):
+        """
+        Cria a função Lambda para validar tokens JWT do Azure AD.
+        """
+        from aws_cdk.aws_lambda import Function, Runtime, Code
+
+        return Function(
+            self,
+            "ValidateTokenLambda",
+            runtime=Runtime.PYTHON_3_9,
+            handler="validate_token.handler",
+            code=Code.from_asset("src/validate_token"),
+            environment={
+                "AZURE_AD_CLIENT_ID": self.client_id,
+                "AZURE_AD_TENANT_ID": self.tenant_id,
+            },
         )
