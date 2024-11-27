@@ -89,6 +89,5 @@ class IacStack(Stack):
         # Criar stack Lambda
         self.lambda_stack = LambdaStack(
             self,
-            api_gateway_resource=api_gateway_resource,
             environment_variables=ENVIRONMENT_VARIABLES,
         )
