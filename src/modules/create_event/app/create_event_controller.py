@@ -1,5 +1,5 @@
-from src.modules.create_event.app.create_event_usecase import CreateEventUsecase
-from src.modules.create_event.app.create_event_viewmodel import CreateEventViewModel
+from .create_event_usecase import CreateEventUsecase
+from .create_event_viewmodel import CreateEventViewModel
 from src.shared.helpers.external_interfaces.http_codes import NotFound, BadRequest, InternalServerError, Created
 from src.shared.helpers.errors.controller_errors import MissingParameters, WrongTypeParameter
 from src.shared.helpers.external_interfaces.external_interface import IResponse, IRequest

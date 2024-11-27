@@ -1,5 +1,5 @@
-from src.modules.create_course.app.create_course_usecase import CreateCourseUsecase
-from src.modules.create_course.app.create_course_viewmodel import CreateCourseViewModel
+from .create_course_usecase import CreateCourseUsecase
+from .create_course_viewmodel import CreateCourseViewModel
 from src.shared.helpers.external_interfaces.http_codes import NotFound, BadRequest, InternalServerError, Created
 from src.shared.helpers.errors.controller_errors import MissingParameters, WrongTypeParameter
 from src.shared.helpers.external_interfaces.external_interface import IResponse, IRequest

@@ -1,5 +1,5 @@
-from src.modules.create_member.app.create_member_usecase import CreateMemberUsecase
-from src.modules.create_member.app.create_member_viewmodel import CreateMemberViewmodel
+from .create_member_usecase import CreateMemberUsecase
+from .create_member_viewmodel import CreateMemberViewmodel
 from src.shared.helpers.external_interfaces.http_codes import NotFound, BadRequest, InternalServerError, Created
 from src.shared.helpers.errors.controller_errors import MissingParameters, WrongTypeParameter
 from src.shared.helpers.errors.usecase_errors import DuplicatedItem

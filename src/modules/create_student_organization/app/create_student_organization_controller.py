@@ -1,5 +1,5 @@
-from src.modules.create_student_organization.app.create_student_organization_usecase import CreateStudentOrganizationUsecase
-from src.modules.create_student_organization.app.create_student_organization_viewmodel import CreateStudentOrganizationViewModel
+from .create_student_organization_usecase import CreateStudentOrganizationUsecase
+from .create_student_organization_viewmodel import CreateStudentOrganizationViewModel
 from src.shared.helpers.external_interfaces.http_codes import NotFound, BadRequest, InternalServerError, Created
 from src.shared.helpers.errors.controller_errors import MissingParameters, WrongTypeParameter
 from src.shared.helpers.external_interfaces.external_interface import IResponse, IRequest
