@@ -1,6 +1,6 @@
 import os
 from aws_cdk import Stack
-from aws_cdk.aws_apigateway import RestApi, Cors, CfnAuthorizer, AuthorizationType
+from aws_cdk.aws_apigateway import RestApi, Cors, CfnAuthorizer, AuthorizationType, LambdaIntegration
 from constructs import Construct
 
 from .dynamo_stack import DynamoStack
@@ -45,7 +45,7 @@ class IacStack(Stack):
             },
         )
 
-        # Configurar Lambda para autenticação via Azure AD
+        # Criar Lambda para autenticação via Azure AD
         validate_token_lambda = self.create_validate_token_lambda()
 
         # Configurar Authorizer com a Lambda
@@ -56,14 +56,15 @@ class IacStack(Stack):
             type="REQUEST",
             rest_api_id=self.rest_api.rest_api_id,
             identity_source="method.request.header.Authorization",
-            authorizer_uri=validate_token_lambda.function_arn,
+            authorizer_uri=f"arn:aws:apigateway:{self.aws_region}:lambda:path/2015-03-31/functions/{validate_token_lambda.function_arn}/invocations",
         )
 
-        # Associar o authorizer ao recurso da API
+        # Associar o authorizer ao recurso da API (usando seu ID)
         api_gateway_resource.add_method(
             "GET",
+            integration=LambdaIntegration(validate_token_lambda),
             authorization_type=AuthorizationType.CUSTOM,
-            authorizer=azure_ad_authorizer,
+            authorizer_id=azure_ad_authorizer.ref,  # Referência direta ao ID do authorizer
         )
 
         # Criar stacks auxiliares
