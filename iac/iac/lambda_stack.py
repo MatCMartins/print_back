@@ -14,6 +14,11 @@ class LambdaStack(Construct):
     def __init__(self, scope: Construct, environment_variables: dict) -> None:
         super().__init__(scope, "LambdaStack")
 
+        self.lambda_layer = lambda_.LayerVersion(self, "SemanaPrint_Layer",
+                                                 code=lambda_.Code.from_asset("./lambda_layer_out_temp"),
+                                                 compatible_runtimes=[lambda_.Runtime.PYTHON_3_9]
+                                                 )
+
         self.create_course_function = self.create_lambda_function("create_course", environment_variables)
         self.create_event_function = self.create_lambda_function("create_event", environment_variables)
         self.create_member_function = self.create_lambda_function("create_member", environment_variables)
@@ -85,6 +90,7 @@ class LambdaStack(Construct):
             code=lambda_.Code.from_asset(f"../src/modules/{module_name}"),
             handler=f"app.{module_name}_presenter.lambda_handler",
             runtime=lambda_.Runtime.PYTHON_3_9,
+            layers=[self.lambda_layer],
             environment=environment_variables,
             timeout=Duration.seconds(15),
         )

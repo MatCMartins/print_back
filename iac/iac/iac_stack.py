@@ -16,7 +16,7 @@ class IacStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # Obtenção de variáveis de ambiente
-        self.github_ref_name = os.environ.get("GITHUB_REF_NAME", "dev")
+        self.github_ref_name = os.environ.get("GITHUB_REF_NAME", "main")
         self.aws_region = os.environ.get("AWS_REGION", "sa-east-1")
 
         # Configuração da RestApi com CORS
