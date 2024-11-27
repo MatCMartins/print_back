@@ -1,9 +1,57 @@
-
 name: CD
 
 on:
   push:
     branches:
-      - main
-
+      - prod
+      - dev
+      - homolog
   workflow_dispatch:
+
+jobs:
+  DeployToAWS:
+    environment:
+      name: ${{ github.ref_name }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Setup AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GithubActionsRole
+          role-session-name: github-action
+
+      - name: Install dependencies
+        run: |
+          npm install -g aws-cdk
+          cd iac
+          pip install -r requirements.txt
+
+      - name: Deploy with CDK
+        run: |
+          cd iac
+          cdk synth
+          cdk deploy --require-approval never
+        env:
+          AZURE_AD_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+          AZURE_AD_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+          STACK_NAME: SemanaPrintActionStack-${{ github.ref_name }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          S3_BUCKET_NAME_COURSE: ${{ vars.S3_BUCKET_NAME_COURSE }}
+          S3_BUCKET_NAME_EVENT: ${{ vars.S3_BUCKET_NAME_EVENT }}
+          S3_BUCKET_NAME_MEMBER: ${{ vars.S3_BUCKET_NAME_MEMBER }}
+          S3_BUCKET_NAME_STU_ORG: ${{ vars.S3_BUCKET_NAME_STU_ORG }}
