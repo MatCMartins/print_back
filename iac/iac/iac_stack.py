@@ -1,11 +1,6 @@
-from aws_cdk import (
-    Stack,
-)
+from aws_cdk import Stack
 from constructs import Construct
-
-from aws_cdk.aws_apigateway import RestApi, Cors
-from aws_cdk.aws_iam import Role, ServicePrincipal, PolicyStatement
-
+from aws_cdk.aws_apigateway import RestApi, Cors, CfnAuthorizer
 from .dynamo_stack import DynamoStack
 from .bucket_stack import BucketStack
 from .lambda_stack import LambdaStack
@@ -18,7 +13,6 @@ class IacStack(Stack):
         self.dynamo_stack = DynamoStack(self)
         self.bucket_stack = BucketStack(self)
 
-        # API Gateway Config with OpenID Connect Integration
         self.rest_api = RestApi(
             self,
             "SemanaPrint_RestApi",
@@ -26,24 +20,21 @@ class IacStack(Stack):
             description="Semana Print RestApi",
             default_cors_preflight_options={
                 "allow_origins": Cors.ALL_ORIGINS,
-                "allow_methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+                "allow_methods": Cors.ALL_METHODS,
                 "allow_headers": Cors.DEFAULT_HEADERS,
             },
         )
 
-        # Add Authorization with Azure AD (OpenID Connect)
-        azure_ad_oidc = {
-            "authorization_endpoint": "https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/authorize",
-            "token_endpoint": "https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token",
-            "user_info_endpoint": "https://graph.microsoft.com/oidc/userinfo",
-            "client_id": "{client_id}",
-        }
+        azure_ad_oidc_provider_arn = f"arn:aws:apigateway:{Stack.of(self).region}:oidc-provider/login.microsoftonline.com"
 
-        self.rest_api.root.add_method(
-            "ANY",
-            None,  # Integration will be set by LambdaStack
-            authorization_type=None,  # Handle auth manually in Lambda
-            api_key_required=False,
+        self.azure_ad_authorizer = CfnAuthorizer(
+            self,
+            "AzureADAuthorizer",
+            name="AzureAD_OIDC",
+            rest_api_id=self.rest_api.rest_api_id,
+            type="JWT",
+            identity_source="method.request.header.Authorization",
+            provider_arns=[azure_ad_oidc_provider_arn],
         )
 
         ENVIRONMENT_VARIABLES = {
