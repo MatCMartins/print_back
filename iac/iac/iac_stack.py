@@ -41,7 +41,7 @@ class IacStack(Stack):
         # Variáveis de ambiente para funções Lambda
         ENVIRONMENT_VARIABLES = {
             # "STAGE": self.github_ref_name.upper(),
-            "STAGE": "TEST",
+            "STAGE": "PROD",
             "REGION": self.aws_region,
             "DYNAMO_COURSE_TABLE": self.dynamo_stack.dynamo_table_course.table_name,
             "DYNAMO_EVENT_TABLE": self.dynamo_stack.dynamo_table_event.table_name,
