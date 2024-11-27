@@ -35,7 +35,7 @@ class LambdaStack(Construct):
         return lambda_.Function(
             self,
             module_name,
-            code=lambda_.Code.from_asset(f"../src/{module_name}"),
+            code=lambda_.Code.from_asset(f"../src/modules/{module_name}"),
             handler=f"{module_name}.handler",
             runtime=lambda_.Runtime.PYTHON_3_9,
             environment=environment_variables,
