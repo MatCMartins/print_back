@@ -3,7 +3,7 @@ from .update_event_usecase import UpdateEventUsecase
 from src.shared.environments import Environments
 from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpRequest, LambdaHttpResponse
 
-repo = Environments.get_event_repo()()
+repo = Environments.get_event_repo()
 usecase = UpdateEventUsecase(repo)
 controller = UpdateEventController(usecase)
 

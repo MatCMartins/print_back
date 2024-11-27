@@ -19,12 +19,11 @@ class EventRepositoryDynamo(IEventRepository):
         return f"#{event_id}"
 
     def __init__(self):
+        # Atualiza para usar a tabela específica do DynamoDB para "Event"
         self.dynamo = DynamoDatasource(
             endpoint_url=Environments.get_envs().endpoint_url,
-            dynamo_table_name=Environments.get_envs().dynamo_table_name,
-            region=Environments.get_envs().region,
-            partition_key=Environments.get_envs().dynamo_partition_key,
-            sort_key=Environments.get_envs().dynamo_sort_key
+            dynamo_table_name=Environments.get_envs().dynamo_tables["EVENT"],  # Usa a tabela de eventos
+            region=Environments.get_envs().region
         )
 
     def get_event(self, event_id: str) -> Event:
@@ -42,7 +41,7 @@ class EventRepositoryDynamo(IEventRepository):
     def get_all_events(self) -> List[Event]:
         resp = self.dynamo.get_all_items()
         events = []
-        for item in resp['Items']:
+        for item in resp.get('Items', []):
             if item.get("entity") == 'event':
                 events.append(EventDynamoDTO.from_dynamo(item).to_entity())
 
@@ -52,7 +51,7 @@ class EventRepositoryDynamo(IEventRepository):
         event_dto = EventDynamoDTO.from_entity(new_event)
         self.dynamo.put_item(
             partition_key=self.partition_key_format(new_event.event_id),
-            sort_key=self.sort_key_format(event_id=new_event.event_id),
+            sort_key=self.sort_key_format(new_event.event_id),
             item=event_dto.to_dynamo()
         )
         return new_event
@@ -68,7 +67,17 @@ class EventRepositoryDynamo(IEventRepository):
 
         return EventDynamoDTO.from_dynamo(resp['Attributes']).to_entity()
 
-    def update_event(self, event_id: str, new_name: Optional[str] = None, new_description: Optional[str] = None, new_banner: Optional[str] = None, new_start_date: Optional[int] = None, new_end_date: Optional[int] = None, new_rooms: Optional[dict] = None, new_subscribers: Optional[dict] = None) -> Event:
+    def update_event(
+        self,
+        event_id: str,
+        new_name: Optional[str] = None,
+        new_description: Optional[str] = None,
+        new_banner: Optional[str] = None,
+        new_start_date: Optional[int] = None,
+        new_end_date: Optional[int] = None,
+        new_rooms: Optional[dict] = None,
+        new_subscribers: Optional[dict] = None
+    ) -> Event:
         item_to_update = {}
 
         if new_name is not None:
@@ -86,7 +95,7 @@ class EventRepositoryDynamo(IEventRepository):
         if new_subscribers is not None:
             item_to_update['subscribers'] = new_subscribers
 
-        if item_to_update == {}:
+        if not item_to_update:
             raise NoItemsFound("Nothing to update")
 
         resp = self.dynamo.update_item(

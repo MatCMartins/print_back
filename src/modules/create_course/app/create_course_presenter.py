@@ -3,7 +3,7 @@ from .create_course_usecase import CreateCourseUsecase
 from src.shared.environments import Environments
 from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpRequest, LambdaHttpResponse
 
-repo = Environments.get_course_repo()()
+repo = Environments.get_course_repo()
 usecase = CreateCourseUsecase(repo)
 controller = CreateCourseController(usecase)
 

@@ -3,7 +3,7 @@ from .get_all_members_usecase import GetAllMembersUsecase
 from src.shared.environments import Environments
 from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpRequest, LambdaHttpResponse
 
-repo = Environments.get_member_repo()()
+repo = Environments.get_member_repo()
 usecase = GetAllMembersUsecase(repo)
 controller = GetAllMembersController(usecase)
 

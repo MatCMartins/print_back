@@ -3,7 +3,7 @@ from .delete_event_usecase import DeleteEventUsecase
 from src.shared.environments import Environments
 from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpRequest, LambdaHttpResponse
 
-repo = Environments.get_event_repo()()
+repo = Environments.get_event_repo()
 usecase = DeleteEventUsecase(repo)
 controller = DeleteEventController(usecase)
 

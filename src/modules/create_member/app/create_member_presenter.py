@@ -3,7 +3,7 @@ from .create_member_usecase import CreateMemberUsecase
 from src.shared.environments import Environments
 from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpRequest, LambdaHttpResponse
 
-repo = Environments.get_member_repo()()
+repo = Environments.get_member_repo()
 usecase = CreateMemberUsecase(repo)
 controller = CreateMemberController(usecase)
 

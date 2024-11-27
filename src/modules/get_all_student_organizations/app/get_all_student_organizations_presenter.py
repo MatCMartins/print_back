@@ -3,7 +3,7 @@ from .get_all_student_organizations_usecase import GetAllStudentOrganizationsUse
 from src.shared.environments import Environments
 from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpRequest, LambdaHttpResponse
 
-repo = Environments.get_user_repo()()
+repo = Environments.get_student_org_repo()
 usecase = GetAllStudentOrganizationsUsecase(repo)
 controller = GetAllStudentOrganizationsController(usecase)
 
