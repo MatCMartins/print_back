@@ -23,7 +23,9 @@ class MemberRepositoryDynamo(IMemberRepository):
         self.dynamo = DynamoDatasource(
             endpoint_url=Environments.get_envs().endpoint_url,
             dynamo_table_name=Environments.get_envs().dynamo_tables["MEMBER"],  # Usa a tabela de membros
-            region=Environments.get_envs().region
+            region=Environments.get_envs().region,
+            partition_key="PK",
+            sort_key="SK" 
         )
 
     def get_member(self, member_id: int) -> Member:

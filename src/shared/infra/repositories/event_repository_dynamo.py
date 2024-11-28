@@ -23,7 +23,9 @@ class EventRepositoryDynamo(IEventRepository):
         self.dynamo = DynamoDatasource(
             endpoint_url=Environments.get_envs().endpoint_url,
             dynamo_table_name=Environments.get_envs().dynamo_tables["EVENT"],  # Usa a tabela de eventos
-            region=Environments.get_envs().region
+            region=Environments.get_envs().region,
+            partition_key="PK",
+            sort_key="SK" 
         )
 
     def get_event(self, event_id: str) -> Event:

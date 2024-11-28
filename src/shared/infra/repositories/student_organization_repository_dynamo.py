@@ -23,7 +23,9 @@ class StudentOrganizationRepositoryDynamo(IStudentOrganizationRepository):
         self.dynamo = DynamoDatasource(
             endpoint_url=Environments.get_envs().endpoint_url,
             dynamo_table_name=Environments.get_envs().dynamo_tables["STUDENT_ORG"],  # Usa a tabela de organizações estudantis
-            region=Environments.get_envs().region
+            region=Environments.get_envs().region,
+            partition_key="PK",
+            sort_key="SK" 
         )
 
     def get_stu_org(self, stu_org_id: str) -> StudentOrganization:
