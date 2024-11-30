@@ -1,12 +1,13 @@
 import json
-from dataclasses import dataclass 
+from unittest.mock import patch
 
 from src.modules.delete_course.app.delete_course_presenter import lambda_handler
 from src.shared.infra.repositories.course_repository_mock import CourseRepositoryMock
 
 class Test_DeleteCoursePresenter:
-
-    def test_delete_course_presenter(self):
+    @patch("src.modules.delete_course.app.delete_course_presenter.authenticate")
+    def test_delete_course_presenter(self, mock_authenticate):
+        mock_authenticate.return_value = "mock_token_valid"
         first_course_id = CourseRepositoryMock().courses[0].course_id
         event = {
             "version": "2.0",

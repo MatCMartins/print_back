@@ -1,11 +1,12 @@
 import json
-
+from unittest.mock import patch
 
 from src.modules.create_course.app.create_course_presenter import lambda_handler
 
 class Test_CreateCoursePresenter:
-
-    def test_create_course_presenter(self):
+    @patch("src.modules.create_course.app.create_course_presenter.authenticate")
+    def test_create_course_presenter(self, mock_authenticate):
+        mock_authenticate.return_value = "mock_token_valid"
         event = {
             "version": "2.0",
             "routeKey": "$default",

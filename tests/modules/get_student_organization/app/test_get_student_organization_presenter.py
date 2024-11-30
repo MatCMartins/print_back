@@ -1,4 +1,5 @@
 import json
+from unittest.mock import patch
 from dataclasses import dataclass
 import pytest
 
@@ -6,8 +7,9 @@ from src.modules.get_student_organization.app.get_student_organization_presenter
 from src.shared.infra.repositories.student_organization_repository_mock import StudentOrganizationRepositoryMock
 
 class Test_GetStudentOrganizationPresenter:
-
-    def test_get_student_organization_presenter(self):
+    @patch("src.modules.get_student_organization.app.get_student_organization_presenter.authenticate")
+    def test_get_student_organization_presenter(self, mock_authenticate):
+        mock_authenticate.return_value = "mock_token_valid"
         first_org_id = StudentOrganizationRepositoryMock().stu_orgs[0].stu_org_id
         event = {
             "version": "2.0",
