@@ -1,13 +1,14 @@
 import json
 from dataclasses import dataclass
-import pytest
+from unittest.mock import patch
 
 from src.modules.delete_student_organization.app.delete_student_organization_presenter import lambda_handler
 from src.shared.infra.repositories.student_organization_repository_mock import StudentOrganizationRepositoryMock
 
 class Test_DeleteStudentOrganizationPresenter:
-
-    def test_delete_student_organization_presenter(self):
+    @patch("src.modules.delete_student_organization.app.delete_student_organization_presenter.authenticate")
+    def test_delete_student_organization_presenter(self, mock_authenticate):
+        mock_authenticate.return_value = "mock_token_valid"
         first_org_id = StudentOrganizationRepositoryMock().stu_orgs[0].stu_org_id
         event = {
             "version": "2.0",

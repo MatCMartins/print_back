@@ -1,13 +1,12 @@
 import json
-from dataclasses import dataclass
-import pytest
-
+from unittest.mock import patch
 from src.modules.update_event.app.update_event_presenter import lambda_handler
 from src.shared.infra.repositories.event_repository_mock import EventRepositoryMock
 
 class Test_UpdateEventPresenter:
-
-    def test_update_event_presenter(self):
+    @patch("src.modules.update_event.app.update_event_presenter.authenticate")
+    def test_update_event_presenter(self, mock_authenticate):
+        mock_authenticate.return_value = "mock_token_valid"
         first_event_id = EventRepositoryMock().events[0].event_id
         event = {
             "version": "2.0",
@@ -30,7 +29,7 @@ class Test_UpdateEventPresenter:
                 "start_date": 1673000000,
                 "end_date": 1673086400,
                 "rooms": {"Main Hall": 150},
-                "subscribers": {"user1": "Main Hall", "user2": "Main Hall"}
+                "subscribers": {"user1": "Main Hall"}
             },
             "requestContext": {
                 "accountId": "123456789012",
@@ -78,4 +77,4 @@ class Test_UpdateEventPresenter:
         assert body["start_date"] == 1673000000
         assert body["end_date"] == 1673086400
         assert body["rooms"] == {"Main Hall": 150}
-        assert body["subscribers"] == {"user1": "Main Hall", "user2": "Main Hall"}
+        assert body["subscribers"] == {"user1": "Main Hall"}

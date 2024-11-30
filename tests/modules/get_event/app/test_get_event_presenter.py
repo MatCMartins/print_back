@@ -1,11 +1,12 @@
 import json
-import pytest
+from unittest.mock import patch
 from src.modules.get_event.app.get_event_presenter import lambda_handler
 from src.shared.infra.repositories.event_repository_mock import EventRepositoryMock
 
 class Test_GetEventPresenter:
-
-    def test_get_event_presenter(self):
+    @patch("src.modules.get_event.app.get_event_presenter.authenticate")
+    def test_get_event_presenter(self, mock_authenticate):
+        mock_authenticate.return_value = "mock_token_valid"
         first_event_id = EventRepositoryMock().events[0].event_id
         event = {
             "version": "2.0",

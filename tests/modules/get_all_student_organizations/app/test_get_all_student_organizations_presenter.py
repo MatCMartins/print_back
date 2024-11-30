@@ -1,13 +1,14 @@
 import json
 from dataclasses import dataclass
-import pytest
+from unittest.mock import patch
 
 from src.modules.get_all_student_organizations.app.get_all_student_organizations_presenter import lambda_handler
 from src.shared.infra.repositories.student_organization_repository_mock import StudentOrganizationRepositoryMock
 
 class Test_GetAllStudentOrganizationsPresenter:
-
-    def test_get_all_student_organizations_presenter(self):
+    @patch("src.modules.get_all_student_organizations.app.get_all_student_organizations_presenter.authenticate")
+    def test_get_all_student_organizations_presenter(self, mock_authenticate):
+        mock_authenticate.return_value = "mock_token_valid"
         event = {
             "version": "2.0",
             "routeKey": "$default",

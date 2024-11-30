@@ -1,11 +1,12 @@
 import json
-
+from unittest.mock import patch
 
 from src.modules.create_member.app.create_member_presenter import lambda_handler
 
 class Test_CreateMemberPresenter:
-
-    def test_create_member_presenter(self):
+    @patch("src.modules.create_member.app.create_member_presenter.authenticate")
+    def test_create_member_presenter(self, mock_authenticate):
+        mock_authenticate.return_value = "mock_token_valid"
         event = {
             "version": "2.0",
             "routeKey": "$default",
