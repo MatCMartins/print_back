@@ -2,6 +2,7 @@ import os
 import shutil
 from pathlib import Path
 import sys
+import subprocess
 
 IAC_DIRECTORY_NAME = "iac"
 SOURCE_DIRECTORY_NAME = "src"
@@ -29,8 +30,10 @@ def adjust_layer_directory(shared_dir_name: str, destination: str):
 
     # Copy the source directory to the destination directory
     shutil.copytree(source_directory, os.path.join(destination_directory, LAMBDA_LAYER_PREFIX, shared_dir_name))
-    print(
-        f"Copying files from {source_directory} to {os.path.join(destination_directory, LAMBDA_LAYER_PREFIX, shared_dir_name)}")
+
+    python_lib_path = os.path.join(destination_directory, "python")
+    os.makedirs(python_lib_path, exist_ok=True)
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "msal", "-t", python_lib_path])
 
 
 if __name__ == '__main__':
