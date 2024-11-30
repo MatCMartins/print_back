@@ -4,4 +4,4 @@ boto3==1.35.54
 python-dotenv==0.21.0
 aws-lambda-powertools==2.9.0
 aws_xray_sdk==2.11.0
-msal=1.31.1
+msal==1.31.1
