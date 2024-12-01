@@ -78,4 +78,4 @@ class Notification(abc.ABC):
         }
 
     def __repr__(self):
-        return f"Noftification(notification_id={self.notification_id}, name={self.title}, description={self.description}, creation_date={self.creation_date} has_seen={self.has_seen})"
+        return f"Noftification(notification_id={self.notification_id}, title={self.title}, description={self.description}, creation_date={self.creation_date} has_seen={self.has_seen})"
