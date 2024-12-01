@@ -33,3 +33,10 @@ class BucketStack(Construct):
             versioned=True,
             removal_policy=RemovalPolicy.DESTROY,
         )
+        self.notification_bucket = s3.Bucket(
+            self,
+            "NotificationBucket",
+            versioned=True,
+            removal_policy=RemovalPolicy.DESTROY,
+        )
+
