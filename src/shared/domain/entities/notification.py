@@ -16,7 +16,7 @@ class Notification(abc.ABC):
 
         if not self.validate_parameters(title):
             raise EntityError("Invalid Title")
-        self.description = description
+        self.title = title
         
         if not self.validate_parameters(description):
             raise EntityError("Invalid description")
@@ -78,4 +78,4 @@ class Notification(abc.ABC):
         }
 
     def __repr__(self):
-        return f"Noftification(notification_id={self.notification_id}, title={self.title}, description={self.description}, creation_date={self.creation_date} has_seen={self.has_seen})"
+        return f"Notification(notification_id={self.notification_id}, title={self.title}, description={self.description}, creation_date={self.creation_date} has_seen={self.has_seen})"
