@@ -44,3 +44,11 @@ class DynamoStack(Construct):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.DESTROY,
         )
+        self.dynamo_table_notification = dynamodb.Table(
+            self,
+            "NotificationTable",
+            partition_key=dynamodb.Attribute(name="PK", type=dynamodb.AttributeType.STRING),
+            sort_key=dynamodb.Attribute(name="SK", type=dynamodb.AttributeType.STRING),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY,
+        )
