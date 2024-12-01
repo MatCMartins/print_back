@@ -15,25 +15,33 @@ def adjust_layer_directory(shared_dir_name: str, destination: str):
     iac_directory = os.path.join(root_directory, IAC_DIRECTORY_NAME)
 
     print(f"Root directory: {root_directory}")
-    print(f"Root direcotry files: {os.listdir(root_directory)}")
+    print(f"Root directory files: {os.listdir(root_directory)}")
     print(f"IaC directory: {iac_directory}")
     print(f"IaC directory files: {os.listdir(iac_directory)}")
 
-
-    # Get the destination and source directory
     destination_directory = os.path.join(root_directory, IAC_DIRECTORY_NAME, destination)
     source_directory = os.path.join(root_directory, SOURCE_DIRECTORY_NAME, shared_dir_name)
 
-    # Delete the destination directory if it exists
     if os.path.exists(destination_directory):
         shutil.rmtree(destination_directory)
 
-    # Copy the source directory to the destination directory
     shutil.copytree(source_directory, os.path.join(destination_directory, LAMBDA_LAYER_PREFIX, shared_dir_name))
 
     python_lib_path = os.path.join(destination_directory, "python")
     os.makedirs(python_lib_path, exist_ok=True)
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "msal", "-t", python_lib_path])
+
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "pyjwt", "-t", python_lib_path])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "requests", "-t", python_lib_path])
+    
+    subprocess.check_call([
+        sys.executable,
+        "-m",
+        "pip",
+        "install",
+        "cryptography==3.2",
+        "-t",
+        python_lib_path,
+    ])
 
 
 if __name__ == '__main__':
