@@ -6,6 +6,7 @@ from src.shared.domain.repositories.member_repository_interface import IMemberRe
 from src.shared.domain.repositories.student_organization_repository_interface import IStudentOrganizationRepository
 from src.shared.domain.repositories.course_repository_interface import ICourseRepository
 from src.shared.domain.repositories.event_repository_interface import IEventRepository
+from src.shared.domain.repositories.notification_repository_interface import INotificationRepository
 
 
 class STAGE(Enum):
@@ -46,6 +47,7 @@ class Environments:
             "EVENT": os.environ.get("EVENT_BUCKET_NAME"),
             "MEMBER": os.environ.get("MEMBER_BUCKET_NAME"),
             "STUDENT_ORG": os.environ.get("STUDENT_ORG_BUCKET_NAME"),
+            "NOTIFICATION": os.environ.get("NOTIFICATION_BUCKET_NAME"),
         }
 
         self.dynamo_tables = {
@@ -53,6 +55,7 @@ class Environments:
             "EVENT": os.environ.get("DYNAMO_EVENT_TABLE"),
             "MEMBER": os.environ.get("DYNAMO_MEMBER_TABLE"),
             "STUDENT_ORG": os.environ.get("DYNAMO_STUDENT_ORG_TABLE"),
+            "NOTIFICATION": os.environ.get("DYNAMO_NOTIFICATION_TABLE"),
         }
 
         self.endpoint_url = os.environ.get("ENDPOINT_URL")
@@ -125,6 +128,21 @@ class Environments:
             return StudentOrganizationRepositoryDynamo()
         else:
             raise Exception("No repository found for this stage")
+        
+    @staticmethod
+    def get_notification_repo() -> INotificationRepository:
+        """
+        Retorna a instância do repositório de organizações estudantis baseado no stage.
+        """
+        if Environments.get_envs().stage == STAGE.TEST:
+            from src.shared.infra.repositories.notification_repository_mock import NotificationRepositoryMock
+            return NotificationRepositoryMock()
+        elif Environments.get_envs().stage in [STAGE.DEV, STAGE.HOMOLOG, STAGE.PROD]:
+            from src.shared.infra.repositories.notification_repository_dynamo import NotificationRepositoryDynamo
+            return NotificationRepositoryDynamo()
+        else:
+            raise Exception("No repository found for this stage")
+
 
     def __repr__(self):
         return str(self.__dict__)
