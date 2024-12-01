@@ -34,6 +34,7 @@ def adjust_layer_directory(shared_dir_name: str, destination: str):
     python_lib_path = os.path.join(destination_directory, "python")
     os.makedirs(python_lib_path, exist_ok=True)
     subprocess.check_call([sys.executable, "-m", "pip", "install", "pyjwt", "-t", python_lib_path])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "requests", "-t", python_lib_path])
 
 
 if __name__ == '__main__':

@@ -5,3 +5,4 @@ python-dotenv==0.21.0
 aws-lambda-powertools==2.9.0
 aws_xray_sdk==2.11.0
 pyjwt==2.10.1
+requests==2.32.3
