@@ -32,15 +32,11 @@ class IacStack(Stack):
             },
         )
 
-        # Inicializando DynamoDB Stack
         self.dynamo_stack = DynamoStack(self)
 
-        # Inicializando Bucket Stack
         self.bucket_stack = BucketStack(self)
 
-        # Variáveis de ambiente para funções Lambda
         ENVIRONMENT_VARIABLES = {
-            # "STAGE": self.github_ref_name.upper(),
             "STAGE": "PROD",
             "REGION": self.aws_region,
             "DYNAMO_COURSE_TABLE": self.dynamo_stack.dynamo_table_course.table_name,
@@ -88,15 +84,15 @@ class IacStack(Stack):
         })
 
         self.add_api_integration("student-organization", {
-            "POST": self.lambda_stack.get_course_function
+            "POST": self.lambda_stack.get_student_organization_function
         })
 
         self.add_api_integration("member", {
-            "POST": self.lambda_stack.get_course_function
+            "POST": self.lambda_stack.get_member_function
         })
 
         self.add_api_integration("event", {
-            "POST": self.lambda_stack.get_course_function
+            "POST": self.lambda_stack.get_event_function
         })
 
         for function in self.lambda_stack.functions_that_need_dynamo_permissions:
