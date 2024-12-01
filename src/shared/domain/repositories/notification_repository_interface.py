@@ -4,7 +4,7 @@ from typing import List, Optional
 from src.shared.domain.entities.notification import Notification
 
 
-class INotifocationRepository(ABC):
+class INotificationRepository(ABC):
 
     @abstractmethod
     def get_notification(self, notification_id: str) -> Notification:
