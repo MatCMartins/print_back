@@ -37,11 +37,12 @@ def adjust_layer_directory(shared_dir_name: str, destination: str):
     subprocess.check_call([sys.executable, "-m", "pip", "install", "requests", "-t", python_lib_path])
     subprocess.check_call([
         sys.executable,
-        "-m", "pip", "install", 
+        "-m", "pip",
+        "--python", "3.9",
+        "install", 
         "cryptography", 
         "--platform", "manylinux2010_x86_64",
         "--implementation", "cp",
-        "--python", "3.9",
         "--only-binary=:all:", 
         "--upgrade",
         "--target", python_lib_path
