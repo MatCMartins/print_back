@@ -70,4 +70,3 @@ class Test_DeleteStudentOrganizationPresenter:
         assert json.loads(response["body"])["creation_date"] == 1620009600
         assert json.loads(response["body"])["logo"] == "https://datascienceclubimt.com/logo.png"
         assert json.loads(response["body"])["instagram"] == "https://instagram.com/datascienceclubimt"
-        assert json.loads(response["body"])["website_link"] == "https://datascienceimt.com"

@@ -41,7 +41,6 @@ class Test_UpdateCourseController:
             "creation_date": 234567890,
             "logo": "logo",
             "instagram": "instagram",
-            "website_link": "website_link"
         })
 
         response = controller(response)

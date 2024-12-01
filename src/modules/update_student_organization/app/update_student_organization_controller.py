@@ -35,22 +35,9 @@ class UpdateStudentOrganizationController:
             if request.data.get("instagram") is not None:
                 if StudentOrganization.validate_parameters(request.data.get("instagram")) is False:
                     raise WrongTypeParameter("instagram", str, str(type(request.data.get("instagram"))))
-            
-            if request.data.get("website_link") is not None:
-                if StudentOrganization.validate_parameters(request.data.get("website_link")) is False:
-                    raise WrongTypeParameter("website_link", str, str(type(request.data.get("website_link"))))
                 
             
             
-            viewmodel = UpdateStudentOrganizationViewmodel(
-                stu_org_id=request.data.get("stu_org_id"),
-                name=request.data.get("name"),
-                description=request.data.get("description"),
-                creation_date=request.data.get("creation_date"),
-                logo=request.data.get("logo"),
-                instagram=request.data.get("instagram"),
-                website_link=request.data.get("website_link")
-            )
 
             response = self.usecase(
                 stu_org_id=request.data.get("stu_org_id"),
@@ -59,7 +46,15 @@ class UpdateStudentOrganizationController:
                 creation_date=request.data.get("creation_date"),
                 logo=request.data.get("logo"),
                 instagram=request.data.get("instagram"),
-                website_link=request.data.get("website_link")
+            )
+
+            viewmodel = UpdateStudentOrganizationViewmodel(
+                stu_org_id=response.stu_org_id,
+                name=response.name,
+                description=response.description,
+                creation_date=response.creation_date,
+                logo=response.logo,
+                instagram=response.instagram,
             )
 
             return OK(viewmodel.to_dict())

@@ -19,10 +19,9 @@ class StudentOrganizationRepositoryDynamo(IStudentOrganizationRepository):
         return f"#{stu_org_id}"
 
     def __init__(self):
-        # Atualiza para usar a tabela específica do DynamoDB para "StudentOrganization"
         self.dynamo = DynamoDatasource(
             endpoint_url=Environments.get_envs().endpoint_url,
-            dynamo_table_name=Environments.get_envs().dynamo_tables["STUDENT_ORG"],  # Usa a tabela de organizações estudantis
+            dynamo_table_name=Environments.get_envs().dynamo_tables["STUDENT_ORG"],
             region=Environments.get_envs().region,
             partition_key="PK",
             sort_key="SK" 
@@ -77,7 +76,6 @@ class StudentOrganizationRepositoryDynamo(IStudentOrganizationRepository):
         new_creation_date: Optional[int] = None,
         new_logo: Optional[str] = None,
         new_instagram: Optional[str] = None,
-        new_website_link: Optional[str] = None
     ) -> StudentOrganization:
         item_to_update = {}
 
@@ -91,8 +89,6 @@ class StudentOrganizationRepositoryDynamo(IStudentOrganizationRepository):
             item_to_update['logo'] = new_logo
         if new_instagram is not None:
             item_to_update['instagram'] = new_instagram
-        if new_website_link is not None:
-            item_to_update['website_link'] = new_website_link
 
         if not item_to_update:
             raise NoItemsFound("Nothing to update")

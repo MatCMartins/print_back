@@ -11,7 +11,6 @@ class Test_CreateStudentOrganizationViewmodel:
             creation_date=123456789,
             logo="https://enactusimt.com/logo.png",
             instagram="https://instagram.com/enactusimt",
-            website_link="https://enactusimt.com"
         )
 
         viewmodel = CreateStudentOrganizationViewModel(
@@ -21,7 +20,6 @@ class Test_CreateStudentOrganizationViewmodel:
             creation_date=stu_org.creation_date,
             logo=stu_org.logo,
             instagram=stu_org.instagram,
-            website_link=stu_org.website_link
         )
 
         assert re.match(r'^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$', viewmodel.to_dict()["stu_org_id"])
@@ -33,7 +31,6 @@ class Test_CreateStudentOrganizationViewmodel:
             "creation_date": 123456789,
             "logo": "https://enactusimt.com/logo.png",
             "instagram": "https://instagram.com/enactusimt",
-            "website_link": "https://enactusimt.com"
         }	
 
         assert viewmodel.to_dict() == expected

@@ -17,8 +17,7 @@ class StudentOrganizationRepositoryMock(IStudentOrganizationRepository):
                 description="Organization dedicated to promoting knowledge and projects in the field of data science and machine learning.", 
                 creation_date=1620009600, 
                 logo="https://datascienceclubimt.com/logo.png", 
-                instagram="https://instagram.com/datascienceclubimt", 
-                website_link="https://datascienceimt.com"
+                instagram="https://instagram.com/datascienceclubimt"
             ),
             StudentOrganization(
                 stu_org_id="7d644e62-ef8b-4728-a92b-becb8930c24e",
@@ -26,8 +25,7 @@ class StudentOrganizationRepositoryMock(IStudentOrganizationRepository):
                 description="A community focused on artificial intelligence research and applications, encouraging students to participate in AI projects.", 
                 creation_date=1609459200, 
                 logo="https://ailabmaua.com/logo.png", 
-                instagram="https://instagram.com/ailabmaua", 
-                website_link="https://ailabmaua.com"
+                instagram="https://instagram.com/ailabmaua"
             ),
             StudentOrganization(
                 stu_org_id="7d644e62-ef8b-4728-a92b-becb8930c24e",
@@ -35,8 +33,7 @@ class StudentOrganizationRepositoryMock(IStudentOrganizationRepository):
                 description="A student organization focused on building and programming autonomous robots to compete in national and international competitions.", 
                 creation_date=1619827200, 
                 logo="https://roboticsteam.com/logo.png", 
-                instagram="https://instagram.com/roboticsteammaua", 
-                website_link="https://roboticsteammaua.com"
+                instagram="https://instagram.com/roboticsteammaua"
             )
         ]
 
@@ -60,7 +57,7 @@ class StudentOrganizationRepositoryMock(IStudentOrganizationRepository):
 
         return None
 
-    def update_stu_org(self, stu_org_id: str, new_name: Optional[str] = None, new_description: Optional[str] = None, new_creation_date: int = None, new_logo: Optional[str] = None, new_instagram: Optional[str] = None, new_website_link: Optional[str] = None) -> StudentOrganization:
+    def update_stu_org(self, stu_org_id: str, new_name: Optional[str] = None, new_description: Optional[str] = None, new_creation_date: int = None, new_logo: Optional[str] = None, new_instagram: Optional[str] = None) -> StudentOrganization:
         for stu_org in self.stu_orgs:
             if stu_org.stu_org_id == stu_org_id:
                 if new_name is not None:
@@ -73,8 +70,6 @@ class StudentOrganizationRepositoryMock(IStudentOrganizationRepository):
                     stu_org.logo = new_logo
                 if new_instagram is not None:
                     stu_org.instagram = new_instagram
-                if new_website_link is not None:
-                    stu_org.website_link = new_website_link
                 return stu_org
 
         return None

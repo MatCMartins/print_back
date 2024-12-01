@@ -26,7 +26,6 @@ class Test_CreateStudentOrganizationPresenter:
                 "creation_date": 1234567890,
                 "logo": "Logo",
                 "instagram": "Instagram",
-                "website_link": "Website Link"
             },
             "requestContext": {
                 "accountId": "123456789012",
@@ -71,5 +70,4 @@ class Test_CreateStudentOrganizationPresenter:
         assert json.loads(response["body"])["creation_date"] == 1234567890
         assert json.loads(response["body"])["logo"] == "Logo"
         assert json.loads(response["body"])["instagram"] == "Instagram"
-        assert json.loads(response["body"])["website_link"] == "Website Link"
 

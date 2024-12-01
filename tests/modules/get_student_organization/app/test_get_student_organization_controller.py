@@ -20,7 +20,6 @@ class Test_GetStudentOrganizationController:
         assert response.body["creation_date"] == repo.stu_orgs[0].creation_date
         assert response.body["logo"] == repo.stu_orgs[0].logo
         assert response.body["instagram"] == repo.stu_orgs[0].instagram
-        assert response.body["website_link"] == repo.stu_orgs[0].website_link
 
     def test_get_student_organization_controller_no_items_found(self):
         usecase = GetStudentOrganizationUsecase(repo)

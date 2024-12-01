@@ -15,7 +15,6 @@ class Test_StudentOrganizationRepositoryMock:
         assert stu_org.creation_date == 1620009600
         assert stu_org.logo == "https://datascienceclubimt.com/logo.png"
         assert stu_org.instagram == "https://instagram.com/datascienceclubimt"
-        assert stu_org.website_link == "https://datascienceimt.com"
 
     def test_get_stu_org_not_found(self):
         repo = StudentOrganizationRepositoryMock()
@@ -35,7 +34,6 @@ class Test_StudentOrganizationRepositoryMock:
             creation_date=1620009600,
             logo="https://mauatech.com/logo.png",
             instagram="https://instagram.com/mauatech",
-            website_link="https://mauatech.com"
 
         )
 
@@ -46,7 +44,6 @@ class Test_StudentOrganizationRepositoryMock:
         assert repo.stu_orgs[3].creation_date == 1620009600
         assert repo.stu_orgs[3].logo == "https://mauatech.com/logo.png"
         assert repo.stu_orgs[3].instagram == "https://instagram.com/mauatech"
-        assert repo.stu_orgs[3].website_link == "https://mauatech.com"
 
 
     def test_delete_stu_org(self):

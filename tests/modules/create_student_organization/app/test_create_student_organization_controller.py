@@ -15,8 +15,7 @@ class Test_CreateStudentOrganizatiosController:
             "description": "Data Science Club IMT",
             "creation_date": 234567890,
             "logo": "logo",
-            "instagram": "instagram",
-            "website_link": "website_link"
+            "instagram": "instagram"
         })
 
         response = controller(request)
@@ -27,7 +26,6 @@ class Test_CreateStudentOrganizatiosController:
         assert response.body["creation_date"] == 234567890
         assert response.body["logo"] == "logo"
         assert response.body["instagram"] == "instagram"
-        assert response.body["website_link"] == "website_link"
     
     def test_create_student_organization_controller_misssing_name(self):
         usecase = CreateStudentOrganizationUsecase(repo)
@@ -38,7 +36,6 @@ class Test_CreateStudentOrganizatiosController:
             "creation_date": 234567890,
             "logo": "logo",
             "instagram": "instagram",
-            "website_link": "website_link"
         })
 
         response = controller(request)
@@ -55,7 +52,6 @@ class Test_CreateStudentOrganizatiosController:
             "creation_date": 234567890,
             "logo": "logo",
             "instagram": "instagram",
-            "website_link": "website_link"
         })
 
         response = controller(request)
@@ -72,7 +68,6 @@ class Test_CreateStudentOrganizatiosController:
             "description": "Data Science Club IMT",
             "logo": "logo",
             "instagram": "instagram",
-            "website_link": "website_link"
         })
 
         response = controller(request)
@@ -89,7 +84,6 @@ class Test_CreateStudentOrganizatiosController:
             "description": "Data Science Club IMT",
             "creation_date": 234567890,
             "instagram": "instagram",
-            "website_link": "website_link"
         })
 
         response = controller(request)
@@ -106,28 +100,9 @@ class Test_CreateStudentOrganizatiosController:
             "description": "Data Science Club IMT",
             "creation_date": 234567890,
             "logo": "logo",
-            "website_link": "website_link"
         })
 
         response = controller(request)
 
         assert response.status_code == 400
         assert response.body == "Field instagram is missing"
-
-    def test_create_student_organization_controller_misssing_website_link(self):
-        usecase = CreateStudentOrganizationUsecase(repo)
-        controller = CreateStudentOrganizationController(usecase)
-
-        request = HttpRequest(query_params={
-            "name": "Data Science Club IMT",
-            "description": "Data Science Club IMT",
-            "creation_date": 234567890,
-            "logo": "logo",
-            "instagram": "instagram"
-        })
-
-        response = controller(request)
-
-        assert response.status_code == 400
-        assert response.body == "Field website_link is missing"
-    

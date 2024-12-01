@@ -30,7 +30,6 @@ class Test_UpdateStudentOrganizationPresenter:
                 "creation_date": 1620009600,
                 "logo": "https://aeroclubimt.com/logo.png",
                 "instagram": "https://instagram.com/aeroclubimt",
-                "website_link": "https://aeroimt.com"
             },
             "requestContext": {
                 "accountId": "123456789012",
@@ -75,4 +74,3 @@ class Test_UpdateStudentOrganizationPresenter:
         assert json.loads(response["body"])["creation_date"] == 1620009600
         assert json.loads(response["body"])["logo"] == "https://aeroclubimt.com/logo.png"
         assert json.loads(response["body"])["instagram"] == "https://instagram.com/aeroclubimt"
-        assert json.loads(response["body"])["website_link"] == "https://aeroimt.com"

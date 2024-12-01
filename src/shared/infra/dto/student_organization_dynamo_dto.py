@@ -10,16 +10,14 @@ class StudentOrganizationDynamoDTO:
     creation_date: int
     logo: str
     instagram: str
-    website_link: str
 
-    def __init__(self, stu_org_id: str, name: str, description: str, creation_date: int, logo: str, instagram: str, website_link: str):
+    def __init__(self, stu_org_id: str, name: str, description: str, creation_date: int, logo: str, instagram: str):
         self.stu_org_id = stu_org_id
         self.name = name
         self.description = description
         self.creation_date = creation_date
         self.logo = logo
         self.instagram = instagram
-        self.website_link = website_link
 
     @staticmethod
     def from_entity(stu_org: StudentOrganization) -> "StudentOrganizationDynamoDTO":
@@ -33,7 +31,6 @@ class StudentOrganizationDynamoDTO:
             creation_date=stu_org.creation_date,
             logo=stu_org.logo,
             instagram=stu_org.instagram,
-            website_link=stu_org.website_link
         )
 
     def to_dynamo(self) -> dict:
@@ -48,7 +45,6 @@ class StudentOrganizationDynamoDTO:
             "creation_date": self.creation_date,
             "logo": self.logo,
             "instagram": self.instagram,
-            "website_link": self.website_link
         }
 
     @staticmethod
@@ -64,7 +60,6 @@ class StudentOrganizationDynamoDTO:
             creation_date=stu_org_data["creation_date"],
             logo=stu_org_data["logo"],
             instagram=stu_org_data["instagram"],
-            website_link=stu_org_data["website_link"]
         )
 
     def to_entity(self) -> StudentOrganization:
@@ -78,11 +73,10 @@ class StudentOrganizationDynamoDTO:
             creation_date=int(self.creation_date),
             logo=self.logo,
             instagram=self.instagram,
-            website_link=self.website_link
         )
 
     def __repr__(self):
-        return f"StudentOrganizationDynamoDTO(stu_org_id={self.stu_org_id} name={self.name}, description={self.description}, creation_date={self.creation_date}, logo={self.logo}, instagram={self.instagram}, website_link={self.website_link})"
+        return f"StudentOrganizationDynamoDTO(stu_org_id={self.stu_org_id} name={self.name}, description={self.description}, creation_date={self.creation_date}, logo={self.logo}, instagram={self.instagram})"
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

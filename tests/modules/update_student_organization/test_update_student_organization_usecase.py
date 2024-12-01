@@ -15,7 +15,6 @@ class Test_UpdateStudentOrganizationUsecase:
         creation_date=234567890
         logo="logo"
         instagram="instagram"
-        website_link="website_link"
 
         response = usecase(
             stu_org_id=first_stu_org_id,
@@ -24,7 +23,6 @@ class Test_UpdateStudentOrganizationUsecase:
             creation_date=creation_date,
             logo=logo,
             instagram=instagram,
-            website_link=website_link
         )
         
         assert repo.stu_orgs[0].name == "Maua Jr"
@@ -32,7 +30,6 @@ class Test_UpdateStudentOrganizationUsecase:
         assert repo.stu_orgs[0].creation_date == 234567890
         assert repo.stu_orgs[0].logo == "logo"
         assert repo.stu_orgs[0].instagram == "instagram"
-        assert repo.stu_orgs[0].website_link == "website_link"
     
     def test_update_student_organization_no_stu_org_id(self):
         repo = StudentOrganizationRepositoryMock()
@@ -43,7 +40,6 @@ class Test_UpdateStudentOrganizationUsecase:
         creation_date=234567890
         logo="logo"
         instagram="instagram"
-        website_link="website_link"
 
   
         with pytest.raises(NoItemsFound):
@@ -54,5 +50,4 @@ class Test_UpdateStudentOrganizationUsecase:
             creation_date=creation_date,
             logo=logo,
             instagram=instagram,
-            website_link=website_link
         )

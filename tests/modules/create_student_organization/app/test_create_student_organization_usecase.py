@@ -11,16 +11,14 @@ class Test_CreateStudentOrganizationUsecase:
         creation_date = 234567890
         logo = "logo"
         instagram = "instagram"
-        website_link = "website_link"
 
         usecase = CreateStudentOrganizationUsecase(repo)
-        response = usecase(name, description, creation_date, logo, instagram, website_link)
+        response = usecase(name, description, creation_date, logo, instagram)
 
         assert response.name == name
         assert response.description == description
         assert response.creation_date == creation_date
         assert response.logo == logo
         assert response.instagram == instagram
-        assert response.website_link == website_link
             
     

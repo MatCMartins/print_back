@@ -10,9 +10,8 @@ class Test_DeleteStudentOrganizationViewmodel:
             description="description",
             creation_date=1,
             logo="logo",
-            instagram="instagram",
-            website_link="website_link"
-        )
+            instagram="instagram"
+                            )
 
         viewmodel = DeleteStudentOrganizationViewmodel(
             stu_org_id=stu_org.stu_org_id,
@@ -21,7 +20,6 @@ class Test_DeleteStudentOrganizationViewmodel:
             creation_date=stu_org.creation_date,
             logo=stu_org.logo,
             instagram=stu_org.instagram,
-            website_link=stu_org.website_link
         ).to_dict()
 
         expected = {
@@ -31,7 +29,6 @@ class Test_DeleteStudentOrganizationViewmodel:
             "creation_date": stu_org.creation_date,
             "logo": stu_org.logo,
             "instagram": stu_org.instagram,
-            "website_link": stu_org.website_link
         }	
 
         assert viewmodel == expected

@@ -21,7 +21,6 @@ class Test_StudentOrganizationRepositoryDynamo:
             creation_date=1620009600, 
             logo="https://mauatech.com/logo.png",
             instagram="https://instagram.com/mauatech",
-            website_link="https://mauatech.com"
         )
 
         resp = stu_org_repository.create_stu_org(stu_org)

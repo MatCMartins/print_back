@@ -25,7 +25,6 @@ class DeleteStudentOrganizationController:
                 creation_date=stu_org.creation_date,
                 logo=stu_org.logo,
                 instagram=stu_org.instagram,
-                website_link=stu_org.website_link
             )
 
             return OK(viewmodel.to_dict())

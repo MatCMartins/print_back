@@ -19,7 +19,6 @@ class Test_StudentOrganizationDynamoDTO:
             creation_date=repo.stu_orgs[0].creation_date,
             logo=repo.stu_orgs[0].logo,
             instagram=repo.stu_orgs[0].instagram,
-            website_link=repo.stu_orgs[0].website_link
         )
 
         assert student_organization_dto == expected_org_dto
@@ -34,7 +33,6 @@ class Test_StudentOrganizationDynamoDTO:
             creation_date=repo.stu_orgs[0].creation_date,
             logo=repo.stu_orgs[0].logo,
             instagram=repo.stu_orgs[0].instagram,
-            website_link=repo.stu_orgs[0].website_link
         )
 
         student_organization_dynamo = student_organization_dto.to_dynamo()
@@ -47,7 +45,6 @@ class Test_StudentOrganizationDynamoDTO:
             "creation_date": repo.stu_orgs[0].creation_date,
             "logo": repo.stu_orgs[0].logo,
             "instagram": repo.stu_orgs[0].instagram,
-            "website_link": repo.stu_orgs[0].website_link
         }
 
         assert student_organization_dynamo == expected_dict
@@ -62,7 +59,6 @@ class Test_StudentOrganizationDynamoDTO:
                                 'creation_date': 1234,
                                 'logo': 'logo',
                                 'instagram': 'instagram',
-                                'website_link': 'website_link'
                                 }}
 
         stu_org_dto = StudentOrganizationDynamoDTO.from_dynamo(stu_org_data=dynamo_dict["Item"])
@@ -74,7 +70,6 @@ class Test_StudentOrganizationDynamoDTO:
             creation_date=1234,
             logo='logo',
             instagram='instagram',
-            website_link='website_link'
         )
 
         assert stu_org_dto == expected_stu_org_dto
@@ -89,7 +84,6 @@ class Test_StudentOrganizationDynamoDTO:
             creation_date=repo.stu_orgs[0].creation_date,
             logo=repo.stu_orgs[0].logo,
             instagram=repo.stu_orgs[0].instagram,
-            website_link=repo.stu_orgs[0].website_link
         )
 
         stu_org = stu_org_dto.to_entity()
@@ -99,7 +93,6 @@ class Test_StudentOrganizationDynamoDTO:
         assert stu_org.creation_date == repo.stu_orgs[0].creation_date
         assert stu_org.logo == repo.stu_orgs[0].logo
         assert stu_org.instagram == repo.stu_orgs[0].instagram
-        assert stu_org.website_link == repo.stu_orgs[0].website_link
 
     def test_from_dynamo_to_entity(self):
         dynamo_item = {'Item': {'stu_org_id': 'b9799d9d-798c-4f44-9fd7-b9ae41c77496',
@@ -111,7 +104,6 @@ class Test_StudentOrganizationDynamoDTO:
                                 'creation_date': 1234,
                                 'logo': 'logo',
                                 'instagram': 'instagram',
-                                'website_link': 'website_link'
                                 }}
 
         stu_org_dto = StudentOrganizationDynamoDTO.from_dynamo(stu_org_data=dynamo_item["Item"])
@@ -125,7 +117,6 @@ class Test_StudentOrganizationDynamoDTO:
             creation_date=1234,
             logo='logo',
             instagram='instagram',
-            website_link='website_link',
         )
 
         assert stu_org.name == expected_stu_org.name
@@ -133,7 +124,6 @@ class Test_StudentOrganizationDynamoDTO:
         assert stu_org.creation_date == expected_stu_org.creation_date
         assert stu_org.logo == expected_stu_org.logo
         assert stu_org.instagram == expected_stu_org.instagram
-        assert stu_org.website_link == expected_stu_org.website_link
 
 
     def test_from_entity_to_dynamo(self):
@@ -151,7 +141,6 @@ class Test_StudentOrganizationDynamoDTO:
             "creation_date": repo.stu_orgs[0].creation_date,
             "logo": repo.stu_orgs[0].logo,
             "instagram": repo.stu_orgs[0].instagram,
-            "website_link": repo.stu_orgs[0].website_link
         }
 
         assert stu_org_dynamo == expected_dict

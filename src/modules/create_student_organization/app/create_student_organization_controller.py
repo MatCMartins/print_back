@@ -10,7 +10,7 @@ class CreateStudentOrganizationController:
         self.usecase = usecase
     def __call__(self, request: IRequest) -> IResponse:
         try:
-            params = ["name", "description", "creation_date", "logo", "instagram", "website_link"]
+            params = ["name", "description", "creation_date", "logo", "instagram"]
 
             for param in params:
                 if request.data.get(param) is None:
@@ -22,7 +22,6 @@ class CreateStudentOrganizationController:
                 creation_date=request.data.get("creation_date"),
                 logo=request.data.get("logo"),
                 instagram=request.data.get("instagram"),
-                website_link=request.data.get("website_link")
             )
 
             viewmodel = CreateStudentOrganizationViewModel(
@@ -32,7 +31,6 @@ class CreateStudentOrganizationController:
                 creation_date=stu_org.creation_date,
                 logo=stu_org.logo,
                 instagram=stu_org.instagram,
-                website_link=stu_org.website_link
             )
 
             return Created(viewmodel.to_dict())

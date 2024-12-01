@@ -15,7 +15,6 @@ class Test_GetAllStudentOrganizationsViewmodel:
                     "creation_date": 1620009600,
                     "logo": "https://datascienceclubimt.com/logo.png",
                     "instagram": "https://instagram.com/datascienceclubimt",
-                    "website_link": "https://datascienceimt.com"
                 },
                 {
                     "stu_org_id": stu_orgs[1].stu_org_id,
@@ -24,7 +23,6 @@ class Test_GetAllStudentOrganizationsViewmodel:
                     "creation_date": 1609459200,
                     "logo": "https://ailabmaua.com/logo.png",
                     "instagram": "https://instagram.com/ailabmaua",
-                    "website_link": "https://ailabmaua.com"
                 },
                 {
                     "stu_org_id": stu_orgs[2].stu_org_id,
@@ -33,7 +31,6 @@ class Test_GetAllStudentOrganizationsViewmodel:
                     "creation_date": 1619827200,
                     "logo": "https://roboticsteam.com/logo.png",
                     "instagram": "https://instagram.com/roboticsteammaua",
-                    "website_link": "https://roboticsteammaua.com"
                 }
             ]
         }

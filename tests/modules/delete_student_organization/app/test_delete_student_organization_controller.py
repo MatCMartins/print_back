@@ -20,7 +20,6 @@ class Test_deleteStudentOrganizationController:
         assert repo.stu_orgs[0].creation_date == 1609459200
         assert repo.stu_orgs[0].logo == "https://ailabmaua.com/logo.png"
         assert repo.stu_orgs[0].instagram == "https://instagram.com/ailabmaua"
-        assert repo.stu_orgs[0].website_link == "https://ailabmaua.com"
 
     def test_delete_student_organization_controller_no_items_found(self):
         usecase = DeleteStudentOrganizationsUsecase(repo)

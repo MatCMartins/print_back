@@ -15,4 +15,3 @@ class Test_GetStudentOrganizationUsecase:
         assert stu_org.creation_date == repo.stu_orgs[0].creation_date
         assert stu_org.logo == repo.stu_orgs[0].logo
         assert stu_org.instagram == repo.stu_orgs[0].instagram
-        assert stu_org.website_link == repo.stu_orgs[0].website_link

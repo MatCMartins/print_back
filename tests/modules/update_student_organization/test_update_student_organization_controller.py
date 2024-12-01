@@ -16,7 +16,6 @@ class Test_UpdateStudentOrganizationController:
             "creation_date": 234567890,
             "logo": "logo",
             "instagram": "instagram",
-            "website_link": "website_link"
         })
 
         response = controller(response)
@@ -27,7 +26,6 @@ class Test_UpdateStudentOrganizationController:
         assert repo.stu_orgs[0].creation_date == 234567890
         assert repo.stu_orgs[0].logo == "logo"
         assert repo.stu_orgs[0].instagram == "instagram"
-        assert repo.stu_orgs[0].website_link == "website_link"
     
     def test_update_student_organization_no_stu_org_id(self):
         repo = StudentOrganizationRepositoryMock()
@@ -40,7 +38,6 @@ class Test_UpdateStudentOrganizationController:
             "creation_date": 234567890,
             "logo": "logo",
             "instagram": "instagram",
-            "website_link": "website_link"
         })
 
         response = controller(response)
@@ -60,7 +57,6 @@ class Test_UpdateStudentOrganizationController:
             "creation_date": 234567890,
             "logo": "logo",
             "instagram": "instagram",
-            "website_link": "website_link"
         })
 
         response = controller(response)
@@ -80,7 +76,6 @@ class Test_UpdateStudentOrganizationController:
             "creation_date": 234567890,
             "logo": "logo",
             "instagram": "instagram",
-            "website_link": "website_link"
         })
 
         response = controller(response)
@@ -100,7 +95,6 @@ class Test_UpdateStudentOrganizationController:
             "creation_date": "234567890",
             "logo": "logo",
             "instagram": "instagram",
-            "website_link": "website_link"
         })
 
         response = controller(response)
@@ -120,7 +114,6 @@ class Test_UpdateStudentOrganizationController:
             "creation_date": 234567890,
             "logo": 123,
             "instagram": "instagram",
-            "website_link": "website_link"
         })
 
         response = controller(response)
@@ -140,30 +133,9 @@ class Test_UpdateStudentOrganizationController:
             "creation_date": 234567890,
             "logo": "logo",
             "instagram": 123,
-            "website_link": "website_link"
         })
 
         response = controller(response)
 
         assert response.status_code == 400
         assert response.body == "Field instagram isn't the right type.\n Received: <class 'int'>.\n Expected: <class 'str'>"
-    
-    def test_update_student_organization_wrong_website_link_type(self):
-        repo = StudentOrganizationRepositoryMock()
-        usecase = UpdateStudentOrganizationUsecase(repo)
-        controller = UpdateStudentOrganizationController(usecase)
-
-        response = HttpRequest(query_params={
-            "stu_org_id": repo.stu_orgs[0].stu_org_id,
-            "name": "Maua Jr",
-            "description": "This student organization is a junior company",
-            "creation_date": 234567890,
-            "logo": "logo",
-            "instagram": "instagram",
-            "website_link": 123
-        })
-
-        response = controller(response)
-
-        assert response.status_code == 400
-        assert response.body == "Field website_link isn't the right type.\n Received: <class 'int'>.\n Expected: <class 'str'>"
