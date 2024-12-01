@@ -35,6 +35,8 @@ def adjust_layer_directory(shared_dir_name: str, destination: str):
     os.makedirs(python_lib_path, exist_ok=True)
     subprocess.check_call([sys.executable, "-m", "pip", "install", "msal", "-t", python_lib_path])
     subprocess.check_call([sys.executable, "-m", "pip", "install", "snowflake-connector-python==2.7.9", "-t", python_lib_path])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "boto3>=1.26.153", "-t", python_lib_path])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "botocore>=1.29.153", "-t", python_lib_path])
 
 
 if __name__ == '__main__':
