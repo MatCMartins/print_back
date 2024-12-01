@@ -53,12 +53,10 @@ class IacStack(Stack):
             "STUDENT_ORG_BUCKET_NAME": self.bucket_stack.student_org_bucket.bucket_name,
         }
 
-        # Inicializando Lambda Stack
         self.lambda_stack = LambdaStack(
             self, environment_variables=ENVIRONMENT_VARIABLES
         )
 
-        # Integração das funções Lambda com a API Gateway
         self.add_api_integration("courses", {
             "GET": self.lambda_stack.get_all_courses_function,
             "POST": self.lambda_stack.create_course_function,
@@ -85,14 +83,28 @@ class IacStack(Stack):
             "DELETE": self.lambda_stack.delete_student_organization_function,
         })
 
-        # Permissões para DynamoDB
+        self.add_api_integration("course", {
+            "POST": self.lambda_stack.get_course_function
+        })
+
+        self.add_api_integration("student-organization", {
+            "POST": self.lambda_stack.get_course_function
+        })
+
+        self.add_api_integration("member", {
+            "POST": self.lambda_stack.get_course_function
+        })
+
+        self.add_api_integration("event", {
+            "POST": self.lambda_stack.get_course_function
+        })
+
         for function in self.lambda_stack.functions_that_need_dynamo_permissions:
             self.dynamo_stack.dynamo_table_course.grant_read_write_data(function)
             self.dynamo_stack.dynamo_table_event.grant_read_write_data(function)
             self.dynamo_stack.dynamo_table_member.grant_read_write_data(function)
             self.dynamo_stack.dynamo_table_student_org.grant_read_write_data(function)
 
-        # Permissões para S3
         s3_admin_policy = aws_iam.PolicyStatement(
             effect=aws_iam.Effect.ALLOW,
             actions=["s3:*"],
