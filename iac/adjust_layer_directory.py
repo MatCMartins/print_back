@@ -35,7 +35,18 @@ def adjust_layer_directory(shared_dir_name: str, destination: str):
     os.makedirs(python_lib_path, exist_ok=True)
     subprocess.check_call([sys.executable, "-m", "pip", "install", "pyjwt", "-t", python_lib_path])
     subprocess.check_call([sys.executable, "-m", "pip", "install", "requests", "-t", python_lib_path])
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "pycryptodome", "-t", python_lib_path])
+    subprocess.check_call([
+        sys.executable,
+        "-m", "pip", "install", 
+        "cryptography", 
+        "--platform", "manylinux2010_x86_64",
+        "--implementation", "cp",
+        "--python", "3.9",
+        "--only-binary=:all:", 
+        "--upgrade",
+        "--target", python_lib_path
+    ])
+
 
 
 if __name__ == '__main__':
