@@ -35,6 +35,10 @@ def adjust_layer_directory(shared_dir_name: str, destination: str):
     os.makedirs(python_lib_path, exist_ok=True)
     subprocess.check_call([sys.executable, "-m", "pip", "install", "msal", "-t", python_lib_path])
 
+    python_lib_path = os.path.join(destination_directory, "python")
+    os.makedirs(python_lib_path, exist_ok=True)
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "jwt", "-t", python_lib_path])
+
 
 if __name__ == '__main__':
     adjust_layer_directory(shared_dir_name="shared", destination="lambda_layer_out_temp")
