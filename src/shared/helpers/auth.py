@@ -7,7 +7,6 @@ def authenticate(event):
     client_id = os.environ.get("CLIENT_ID")
     client_secret = os.environ.get("CLIENT_SECRET")
     authority = os.environ.get("AUTHORITY")
-    scope = ["User.Read"]
 
     # Instancia o cliente MSAL
     app = ConfidentialClientApplication(
@@ -37,7 +36,8 @@ def authenticate(event):
             key=key,
             algorithms=["RS256"],
             audience=client_id,
-            issuer=f"{authority}/v2.0"
+            issuer=f"{authority}/v2.0",
+            options={"verify_signature": False}
         )
 
         # Verifica os escopos
