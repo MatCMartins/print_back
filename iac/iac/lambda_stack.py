@@ -40,7 +40,7 @@ class LambdaStack(Construct):
         self.get_event_function = self.create_lambda_function("get_event", environment_variables)
         self.get_member_function = self.create_lambda_function("get_member", environment_variables)
         self.get_student_organization_function = self.create_lambda_function("get_student_organization", environment_variables)
-        self.get_notification_function = self.create_lambda_function("get_notifications", environment_variables)
+        self.get_notification_function = self.create_lambda_function("get_notification", environment_variables)
 
         self.update_course_function = self.create_lambda_function("update_course", environment_variables)
         self.update_event_function = self.create_lambda_function("update_event", environment_variables)
