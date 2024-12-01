@@ -55,12 +55,10 @@ class IacStack(Stack):
             "STUDENT_NOTIFICATION_NAME": self.bucket_stack.notification_bucket.bucket_name,
         }
 
-        # Inicializando Lambda Stack
         self.lambda_stack = LambdaStack(
             self, environment_variables=ENVIRONMENT_VARIABLES
         )
 
-        # Integração das funções Lambda com a API Gateway
         self.add_api_integration("courses", {
             "GET": self.lambda_stack.get_all_courses_function,
             "POST": self.lambda_stack.create_course_function,
