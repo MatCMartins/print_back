@@ -15,11 +15,9 @@ class IacStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # Obtenção de variáveis de ambiente
         self.github_ref_name = os.environ.get("GITHUB_REF_NAME", "main")
         self.aws_region = os.environ.get("AWS_REGION", "sa-east-1")
 
-        # Configuração da RestApi com CORS
         self.rest_api = RestApi(
             self,
             "ApiGateway",
@@ -27,13 +25,11 @@ class IacStack(Stack):
             description="API Gateway for the Application",
             default_cors_preflight_options={
                 "allow_origins": Cors.ALL_ORIGINS,
-                "allow_methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+                "allow_methods": ["GET", "POST", "OPTIONS"],
                 "allow_headers": Cors.DEFAULT_HEADERS,
             },
         )
-
         self.dynamo_stack = DynamoStack(self)
-
         self.bucket_stack = BucketStack(self)
 
         ENVIRONMENT_VARIABLES = {
@@ -51,59 +47,49 @@ class IacStack(Stack):
             "STUDENT_NOTIFICATION_NAME": self.bucket_stack.notification_bucket.bucket_name,
         }
 
-        self.lambda_stack = LambdaStack(
-            self, environment_variables=ENVIRONMENT_VARIABLES
-        )
+        self.lambda_stack = LambdaStack(self, environment_variables=ENVIRONMENT_VARIABLES)
 
-        self.add_api_integration("courses", {
-            "GET": self.lambda_stack.get_all_courses_function,
-            "POST": self.lambda_stack.create_course_function,
-            "PUT": self.lambda_stack.update_course_function,
-            "DELETE": self.lambda_stack.delete_course_function,
-        })
+        self.add_individual_endpoints()
 
-        self.add_api_integration("events", {
-            "GET": self.lambda_stack.get_all_events_function,
-            "POST": self.lambda_stack.create_event_function,
-            "PUT": self.lambda_stack.update_event_function,
-            "DELETE": self.lambda_stack.delete_event_function,
-        })
+        self.grant_permissions()
 
-        self.add_api_integration("members", {
-            "GET": self.lambda_stack.get_all_members_function,
-            "POST": self.lambda_stack.create_member_function,
-        })
+    def add_individual_endpoints(self):
 
-        self.add_api_integration("student-organizations", {
-            "GET": self.lambda_stack.get_all_student_organizations_function,
-            "POST": self.lambda_stack.create_student_organization_function,
-            "PUT": self.lambda_stack.update_student_organization_function,
-            "DELETE": self.lambda_stack.delete_student_organization_function,
-        })
-        
-        self.add_api_integration("notifications", {
-            "GET": self.lambda_stack.get_all_student_organizations_function,
-            "POST": self.lambda_stack.create_student_organization_function,
-            "PUT": self.lambda_stack.update_student_organization_function,
-            "DELETE": self.lambda_stack.delete_student_organization_function,
-        })
+        endpoints = {
+            "courses/get-all": self.lambda_stack.get_all_courses_function,
+            "courses/create": self.lambda_stack.create_course_function,
+            "courses/update": self.lambda_stack.update_course_function,
+            "courses/delete": self.lambda_stack.delete_course_function,
+            "events/get-all": self.lambda_stack.get_all_events_function,
+            "events/create": self.lambda_stack.create_event_function,
+            "events/update": self.lambda_stack.update_event_function,
+            "events/delete": self.lambda_stack.delete_event_function,
+            "members/get-all": self.lambda_stack.get_all_members_function,
+            "members/create": self.lambda_stack.create_member_function,
+            "student-organizations/get-all": self.lambda_stack.get_all_student_organizations_function,
+            "student-organizations/create": self.lambda_stack.create_student_organization_function,
+            "student-organizations/update": self.lambda_stack.update_student_organization_function,
+            "student-organizations/delete": self.lambda_stack.delete_student_organization_function,
+            "notifications/get-all": self.lambda_stack.get_all_student_organizations_function,
+            "notifications/create": self.lambda_stack.create_student_organization_function,
+            "notifications/update": self.lambda_stack.update_student_organization_function,
+            "notifications/delete": self.lambda_stack.delete_student_organization_function,
+            "course/get": self.lambda_stack.get_course_function,
+            "student-organization/get": self.lambda_stack.get_student_organization_function,
+            "member/get": self.lambda_stack.get_member_function,
+            "event/get": self.lambda_stack.get_event_function,
+        }
 
-        self.add_api_integration("course", {
-            "POST": self.lambda_stack.get_course_function
-        })
+        for path, lambda_function in endpoints.items():
+            api_resource = self.rest_api.root.add_resource(path)
+            method = "GET" if "get-all" in path else "POST" 
+            lambda_integration = LambdaIntegration(lambda_function)
+            api_resource.add_method(method, lambda_integration)
 
-        self.add_api_integration("student-organization", {
-            "POST": self.lambda_stack.get_student_organization_function
-        })
-
-        self.add_api_integration("member", {
-            "POST": self.lambda_stack.get_member_function
-        })
-
-        self.add_api_integration("event", {
-            "POST": self.lambda_stack.get_event_function
-        })
-
+    def grant_permissions(self):
+        """
+        Grant required DynamoDB and S3 permissions to Lambda functions.
+        """
         for function in self.lambda_stack.functions_that_need_dynamo_permissions:
             self.dynamo_stack.dynamo_table_course.grant_read_write_data(function)
             self.dynamo_stack.dynamo_table_event.grant_read_write_data(function)
@@ -119,15 +105,3 @@ class IacStack(Stack):
 
         for function in self.lambda_stack.functions_that_need_dynamo_permissions:
             function.add_to_role_policy(s3_admin_policy)
-
-    def add_api_integration(self, path: str, methods_to_functions: dict):
-        """
-        Adiciona funções Lambda diretamente ao API Gateway para um endpoint específico.
-
-        :param path: O caminho do recurso na API.
-        :param methods_to_functions: Um dicionário onde as chaves são métodos HTTP e os valores são funções Lambda.
-        """
-        api_resource = self.rest_api.root.add_resource(path)
-        for method, lambda_function in methods_to_functions.items():
-            lambda_integration = LambdaIntegration(lambda_function)
-            api_resource.add_method(method, lambda_integration)
