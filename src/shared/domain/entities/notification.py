@@ -56,6 +56,9 @@ class Notification(abc.ABC):
             return False
         elif type(param) != list:
             return False
+        for p in param:
+            if len(p) != 36:
+                return False
         return True
 
     @staticmethod

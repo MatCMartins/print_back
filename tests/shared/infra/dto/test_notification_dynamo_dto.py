@@ -55,7 +55,7 @@ class Test_NotificationDynamoDTO:
                                 'entity': 'notification',
                                 'description': 'description',
                                 'creation_date': 1234,
-                                'has_seen': ['1234']
+                                'has_seen': ["b9799d9d-798c-4f44-9fd7-b9ae41c77496"]
                                 }}
 
         notification_dto = NotificationDynamoDTO.from_dynamo(notification_data=dynamo_dict["Item"])
@@ -65,7 +65,7 @@ class Test_NotificationDynamoDTO:
             title='mateus',
             description='description',
             creation_date=1234,
-            has_seen=['1234']
+            has_seen=["b9799d9d-798c-4f44-9fd7-b9ae41c77496"]
         )
 
         assert notification_dto == expected_notification_dto
@@ -96,7 +96,7 @@ class Test_NotificationDynamoDTO:
                                 'entity': 'notification',
                                 'description': 'description',
                                 'creation_date': 1234,
-                                'has_seen': ['1234']
+                                'has_seen': ["b9799d9d-798c-4f44-9fd7-b9ae41c77496"]
                                 }}
 
         notification_dto = NotificationDynamoDTO.from_dynamo(notification_data=dynamo_item["Item"])
@@ -108,7 +108,7 @@ class Test_NotificationDynamoDTO:
             title='mateus',
             description='description',
             creation_date=1234,
-            has_seen=['1234'],
+            has_seen=["b9799d9d-798c-4f44-9fd7-b9ae41c77496"],
         )
 
         assert notification.title == expected_notification.title
