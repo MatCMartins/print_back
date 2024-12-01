@@ -22,6 +22,8 @@ class Member(abc.ABC):
             raise EntityError("Invalid activities")
         self.activities = activities
 
+        if not self.validate_id(member_id):
+            raise EntityError("Invalid member_id")
         self.member_id = member_id
 
                 
@@ -38,6 +40,17 @@ class Member(abc.ABC):
         if param is None:
             return False
         elif type(param) != list:
+            return False
+        return True
+
+
+    @staticmethod
+    def validate_id(id: str) -> bool:
+        if id is None:
+            return False
+        elif type(id) != str:
+            return False
+        elif len(id) != 36:
             return False
         return True
 

@@ -5,6 +5,7 @@ from src.shared.domain.entities.course import Course
 class Test_GetCourseViewmodel:
     def test_get_course_viewmodel(self):
         course = Course(
+            course_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name="name",
             course_photo="photo",
             coordinator="coordinator",

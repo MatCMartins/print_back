@@ -31,6 +31,7 @@ class Test_EventRepositoryMock:
     def test_create_event(self):
         repo = EventRepositoryMock()
         event = Event(
+            event_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name="AI Summit",
             description="A summit on artificial intelligence advancements.",
             banner="https://aisummit.com/banner.png",

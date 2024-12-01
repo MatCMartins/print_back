@@ -13,7 +13,7 @@ class Event(abc.ABC):
     rooms: Dict[str, int]
     subscribers: Dict[str, str]
 
-    def __init__(self, name: str, description: str, banner: Optional[str], start_date: int, end_date: int, rooms: Dict[str, int], subscribers: Dict[str, str], event_id: Optional[str] = None):
+    def __init__(self, event_id: str, name: str, description: str, banner: Optional[str], start_date: int, end_date: int, rooms: Dict[str, int], subscribers: Dict[str, str]):
 
         if not self.validate_string(name):
             raise EntityError("Field Invalid name")
@@ -43,7 +43,9 @@ class Event(abc.ABC):
             raise EntityError("Field Invalid subscribers")
         self.subscribers = subscribers
 
-        self.event_id = event_id or str(uuid.uuid4())
+        if not self.validate_id(event_id):
+            raise EntityError("Field Invalid event_id")
+        self.event_id = event_id
 
     @staticmethod
     def validate_string(param: str) -> bool:
@@ -52,6 +54,16 @@ class Event(abc.ABC):
     @staticmethod
     def validate_date(param: int) -> bool:
         return param is not None and isinstance(param, int)
+    
+    @staticmethod
+    def validate_id(id: str) -> bool:
+        if id is None:
+            return False
+        elif type(id) != str:
+            return False
+        elif len(id) != 36:
+            return False
+        return True
 
     @staticmethod
     def validate_rooms(rooms: Dict[str, int]) -> bool:

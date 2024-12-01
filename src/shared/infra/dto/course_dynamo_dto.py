@@ -73,6 +73,7 @@ class CourseDynamoDTO:
         Parse data from CourseDynamoDTO to Course
         """
         return Course(
+            course_id=self.course_id,
             name=self.name,
             course_photo=self.course_photo,
             coordinator=self.coordinator,

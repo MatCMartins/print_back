@@ -102,10 +102,10 @@ class Test_StudentOrganizationDynamoDTO:
         assert stu_org.website_link == repo.stu_orgs[0].website_link
 
     def test_from_dynamo_to_entity(self):
-        dynamo_item = {'Item': {'stu_org_id': '1234',
+        dynamo_item = {'Item': {'stu_org_id': 'b9799d9d-798c-4f44-9fd7-b9ae41c77496',
                                 'name': 'mateus',
-                                'SK': '#' + str(1234),
-                                'PK': 'stu_org#' + str(1234),
+                                'SK': '#' + str("b9799d9d-798c-4f44-9fd7-b9ae41c77496"),
+                                'PK': 'stu_org#' + str("b9799d9d-798c-4f44-9fd7-b9ae41c77496"),
                                 'entity': 'student_organization',
                                 'description': 'description',
                                 'creation_date': 1234,
@@ -119,6 +119,7 @@ class Test_StudentOrganizationDynamoDTO:
         stu_org = stu_org_dto.to_entity()
 
         expected_stu_org = StudentOrganization(
+            stu_org_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name='mateus',
             description='description',
             creation_date=1234,

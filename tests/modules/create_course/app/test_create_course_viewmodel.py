@@ -5,6 +5,7 @@ from src.shared.domain.entities.course import Course
 class Test_CreateCourseViewmodel:
     def test_create_course_viewmodel(self):
         course = Course(
+            course_id = "b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name="Enactus IMT",
             description="Enactus IMT is a student organization that aims to develop projects that help the community.",
             course_photo="https://enactusimt.com/logo.png",

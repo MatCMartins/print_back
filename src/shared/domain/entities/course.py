@@ -13,7 +13,7 @@ class Course(abc.ABC):
     description: str
     link: Optional[str] = None
 
-    def __init__(self, name: str, course_photo: str, coordinator: str, coordinator_photo: str,description: str, link: Optional[str] = None, course_id: Optional[str] = None):
+    def __init__(self, name: str, course_photo: str, course_id: str, coordinator: str, coordinator_photo: str,description: str, link: Optional[str] = None):
 
         if not self.validate_parameters(name):
             raise EntityError("Invalid name")
@@ -39,15 +39,25 @@ class Course(abc.ABC):
             raise EntityError("Invalid course_photo")
         self.course_photo = course_photo
 
-        
-        
-        self.course_id = course_id or str(uuid.uuid4())
+        if not self.validate_id(course_id):
+            raise EntityError("Invalid course_id")
+        self.course_id = course_id
         
     @staticmethod
     def validate_parameters(param: str) -> bool:
         if param is None:
             return False
         elif type(param) != str:
+            return False
+        return True
+
+    @staticmethod
+    def validate_id(id: str) -> bool:
+        if id is None:
+            return False
+        elif type(id) != str:
+            return False
+        elif len(id) != 36:
             return False
         return True
 

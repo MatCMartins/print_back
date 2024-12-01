@@ -11,6 +11,7 @@ class Test_CreateCourseController:
         controller = CreateCourseController(usecase)
 
         request = HttpRequest(query_params={
+            "course_id": "b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             "name": "Physics",
             "description": "A course focused on physics.",
             "course_photo": "https://example.com/physics_photo.jpg",

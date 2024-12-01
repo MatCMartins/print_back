@@ -106,7 +106,7 @@ class Test_EventDynamoDTO:
 
     def test_from_dynamo_to_entity(self):
         dynamo_item = {
-            'event_id': '1234',
+            'event_id': "b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             'name': 'Sample Event',
             'entity': 'event',
             'description': 'A sample event description',
@@ -121,6 +121,7 @@ class Test_EventDynamoDTO:
         event_entity = event_dto.to_entity()
 
         expected_event = Event(
+            event_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name='Sample Event',
             description='A sample event description',
             banner='banner_url',

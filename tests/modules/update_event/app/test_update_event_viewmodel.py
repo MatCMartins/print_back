@@ -4,6 +4,7 @@ from src.shared.domain.entities.event import Event
 class Test_UpdateEventViewModel:
     def test_update_event_viewmodel(self):
         event = Event(
+            event_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name="Tech Summit",
             description="An annual tech summit.",
             banner="https://techsummit.com/banner.png",

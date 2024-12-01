@@ -29,6 +29,7 @@ class Test_StudentOrganizationRepositoryMock:
     def test_create_stu_org(self):
         repo = StudentOrganizationRepositoryMock()
         stu_org = StudentOrganization(
+            stu_org_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name="Maua Tech",
             description="Technology organization focused on promoting knowledge and projects in the field of technology and innovation.",
             creation_date=1620009600,

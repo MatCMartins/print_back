@@ -6,6 +6,7 @@ from src.shared.domain.entities.event import Event
 class Test_CreateEventViewModel:
     def test_create_event_viewmodel(self):
         event = Event(
+            event_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name="Tech Conference 2023",
             description="Annual tech conference for technology enthusiasts.",
             banner="https://techconf.com/banner.png",

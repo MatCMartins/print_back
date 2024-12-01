@@ -31,6 +31,7 @@ class Test_CourseRepositoryMock:
     def test_create_course(self):
         repo = CourseRepositoryMock()
         course = Course(
+            course_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name="Physics",
             course_photo="https://example.com/physics_photo.jpg",
             coordinator="John Doe",

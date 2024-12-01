@@ -109,10 +109,10 @@ class Test_CourseDynamoDTO:
         assert course.link == repo.courses[0].link
     
     def test_from_dynamo_to_entity(self):
-        dynamo_item = {'Item': {'course_id': 1234,
+        dynamo_item = {'Item': {'course_id': "b9799d9d-798c-4f44-9fd7-b9ae41c77496",
                                 'name': 'mateus',
-                                'SK': '#' + str(1234),
-                                'PK': 'course#' + str(1234),
+                                'SK': '#' + str("b9799d9d-798c-4f44-9fd7-b9ae41c77496"),
+                                'PK': 'course#' + str("b9799d9d-798c-4f44-9fd7-b9ae41c77496"),
                                 'entity': 'course',
                                 'course_photo': 'course_photo',
                                 'coordinator': 'coordinator',
@@ -126,6 +126,7 @@ class Test_CourseDynamoDTO:
         course = course_dto.to_entity()
 
         expected_course = Course(
+            course_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name='mateus',
             course_photo='course_photo',
             coordinator='coordinator',

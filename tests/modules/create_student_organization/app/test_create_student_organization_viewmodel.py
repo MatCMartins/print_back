@@ -5,6 +5,7 @@ from src.shared.domain.entities.student_organization import StudentOrganization
 class Test_CreateStudentOrganizationViewmodel:
     def test_create_student_organization_viewmodel(self):
         stu_org = StudentOrganization(
+            stu_org_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name="Enactus IMT",
             description="Enactus IMT is a student organization that aims to develop projects that help the community.",
             creation_date=123456789,

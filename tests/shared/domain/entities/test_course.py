@@ -6,6 +6,7 @@ import pytest
 class Test_Course:
     def test_course(self):
         course = Course(
+            course_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name="Computer Science",
             course_photo="https://example.com/computer_science_photo.jpg",
             coordinator="Alice Johnson",
@@ -23,6 +24,7 @@ class Test_Course:
     
     def test_course_with_optional_link(self):
         course = Course(
+            course_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
             name="Marketing",
             course_photo="https://example.com/marketing_photo.jpg",
             coordinator="Carla Williams",
@@ -36,6 +38,7 @@ class Test_Course:
     def test_course_with_invalid_name(self):
         with pytest.raises(EntityError):
             Course(
+                course_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
                 name=None,
                 course_photo="https://example.com/computer_science_photo.jpg",
                 coordinator="Alice Johnson",
@@ -47,6 +50,7 @@ class Test_Course:
     def test_course_with_invalid_course_photo(self):
         with pytest.raises(EntityError):
             Course(
+                course_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
                 name="Computer Science",
                 course_photo=None,
                 coordinator="Alice Johnson",
@@ -58,6 +62,7 @@ class Test_Course:
     def test_course_with_invalid_coordinator(self):
         with pytest.raises(EntityError):
             Course(
+                course_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
                 name="Computer Science",
                 course_photo="https://example.com/computer_science_photo.jpg",
                 coordinator=None,
@@ -69,6 +74,7 @@ class Test_Course:
     def test_course_with_invalid_coordinator_photo(self):
         with pytest.raises(EntityError):
             Course(
+                course_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
                 name="Computer Science",
                 course_photo="https://example.com/computer_science_photo.jpg",
                 coordinator="Alice Johnson",
@@ -80,6 +86,7 @@ class Test_Course:
     def test_course_with_invalid_description(self):
         with pytest.raises(EntityError):
             Course(
+                course_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
                 name="Computer Science",
                 course_photo="https://example.com/computer_science_photo.jpg",
                 coordinator="Alice Johnson",
@@ -91,6 +98,7 @@ class Test_Course:
     def test_course_with_invalid_link(self):
         with pytest.raises(EntityError):
             Course(
+                course_id="b9799d9d-798c-4f44-9fd7-b9ae41c77496",
                 name="Computer Science",
                 course_photo="https://example.com/computer_science_photo.jpg",
                 coordinator="Alice Johnson",

@@ -76,6 +76,7 @@ class EventDynamoDTO:
         Parse data from EventDynamoDTO to Event
         """
         return Event(
+            event_id=self.event_id,
             name=self.name,
             description=self.description,
             banner=self.banner,

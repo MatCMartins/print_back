@@ -72,6 +72,7 @@ class StudentOrganizationDynamoDTO:
         Parse data from StudentOrganizationDynamoDTO to StudentOrganization
         """
         return StudentOrganization(
+            stu_org_id=self.stu_org_id,
             name=self.name,
             description=self.description,
             creation_date=int(self.creation_date),
