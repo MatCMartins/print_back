@@ -47,10 +47,12 @@ class IacStack(Stack):
             "DYNAMO_EVENT_TABLE": self.dynamo_stack.dynamo_table_event.table_name,
             "DYNAMO_MEMBER_TABLE": self.dynamo_stack.dynamo_table_member.table_name,
             "DYNAMO_STUDENT_ORG_TABLE": self.dynamo_stack.dynamo_table_student_org.table_name,
+            "DYNAMO_NOTIFICATION_TABLE": self.dynamo_stack.dynamo_table_notification.table_name,
             "COURSE_BUCKET_NAME": self.bucket_stack.course_bucket.bucket_name,
             "EVENT_BUCKET_NAME": self.bucket_stack.event_bucket.bucket_name,
             "MEMBER_BUCKET_NAME": self.bucket_stack.member_bucket.bucket_name,
             "STUDENT_ORG_BUCKET_NAME": self.bucket_stack.student_org_bucket.bucket_name,
+            "STUDENT_NOTIFICATION_NAME": self.bucket_stack.notification_bucket.bucket_name,
         }
 
         # Inicializando Lambda Stack
@@ -84,6 +86,13 @@ class IacStack(Stack):
             "PUT": self.lambda_stack.update_student_organization_function,
             "DELETE": self.lambda_stack.delete_student_organization_function,
         })
+        
+        self.add_api_integration("notifications", {
+            "GET": self.lambda_stack.get_all_student_organizations_function,
+            "POST": self.lambda_stack.create_student_organization_function,
+            "PUT": self.lambda_stack.update_student_organization_function,
+            "DELETE": self.lambda_stack.delete_student_organization_function,
+        })
 
         # Permissões para DynamoDB
         for function in self.lambda_stack.functions_that_need_dynamo_permissions:
@@ -91,6 +100,7 @@ class IacStack(Stack):
             self.dynamo_stack.dynamo_table_event.grant_read_write_data(function)
             self.dynamo_stack.dynamo_table_member.grant_read_write_data(function)
             self.dynamo_stack.dynamo_table_student_org.grant_read_write_data(function)
+            self.dynamo_stack.dynamo_table_notification.grant_read_write_data(function)
 
         # Permissões para S3
         s3_admin_policy = aws_iam.PolicyStatement(
