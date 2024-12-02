@@ -19,8 +19,7 @@ class Test_MemberRepositoryMock:
     def test_get_member_not_found(self):
         repo = MemberRepositoryMock()
 
-        with pytest.raises(NoItemsFound):
-            repo.get_member("Member")
+        assert repo.get_member("Member") == None
     
     def test_get_all_members(self):
         repo = MemberRepositoryMock()

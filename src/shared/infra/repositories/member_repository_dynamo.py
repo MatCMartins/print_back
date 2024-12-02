@@ -19,7 +19,6 @@ class MemberRepositoryDynamo(IMemberRepository):
         return f"#{member_id}"
 
     def __init__(self):
-        # Atualiza para usar a tabela específica do DynamoDB para "Member"
         self.dynamo = DynamoDatasource(
             endpoint_url=Environments.get_envs().endpoint_url,
             dynamo_table_name=Environments.get_envs().dynamo_tables["MEMBER"],  # Usa a tabela de membros
@@ -58,43 +57,4 @@ class MemberRepositoryDynamo(IMemberRepository):
         )
         return new_member
 
-    def delete_member(self, member_id: int) -> Member:
-        resp = self.dynamo.delete_item(
-            partition_key=self.partition_key_format(member_id),
-            sort_key=self.sort_key_format(member_id)
-        )
 
-        if "Attributes" not in resp:
-            raise NoItemsFound("member_id")
-
-        return MemberDynamoDTO.from_dynamo(resp['Attributes']).to_entity()
-
-    def update_member(
-        self,
-        member_id: int,
-        new_name: Optional[str] = None,
-        new_email: Optional[str] = None,
-        new_role: Optional[str] = None,
-        new_photo: Optional[str] = None
-    ) -> Member:
-        item_to_update = {}
-
-        if new_name is not None:
-            item_to_update['name'] = new_name
-        if new_email is not None:
-            item_to_update['email'] = new_email
-        if new_role is not None:
-            item_to_update['role'] = new_role
-        if new_photo is not None:
-            item_to_update['photo'] = new_photo
-
-        if not item_to_update:
-            raise NoItemsFound("Nothing to update")
-
-        resp = self.dynamo.update_item(
-            partition_key=self.partition_key_format(member_id),
-            sort_key=self.sort_key_format(member_id),
-            update_dict=item_to_update
-        )
-
-        return MemberDynamoDTO.from_dynamo(resp['Attributes']).to_entity()

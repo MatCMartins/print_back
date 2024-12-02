@@ -14,13 +14,6 @@ class IMemberRepository(ABC):
         pass
 
     @abstractmethod
-    def duplicate_member(self, member_id: str) -> Member:
-        """
-        Find member by member_id and return it
-        """
-        pass
-
-    @abstractmethod
     def get_all_members(self) -> List[Member]:
         """
         If member_id not found raise NoItemsFound

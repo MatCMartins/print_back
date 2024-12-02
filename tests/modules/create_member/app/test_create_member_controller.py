@@ -5,7 +5,7 @@ from src.shared.helpers.external_interfaces.http_models import HttpRequest
 
 repo = MemberRepositoryMock()
 
-class Test_CreateStudentOrganizatiosController:
+class Test_CreateMemberController:
     def test_create_member_controller(self):
         usecase = CreateMemberUsecase(repo)
         controller = CreateMemberController(usecase)

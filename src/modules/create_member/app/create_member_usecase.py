@@ -8,7 +8,7 @@ class CreateMemberUsecase:
         self.repo = repo
     def __call__(self, member_id: str, name: str, email: str, activities: list):
 
-        if self.repo.duplicate_member(member_id):
+        if self.repo.get_member(member_id):
             raise DuplicatedItem("member_id")
         
         member = Member(

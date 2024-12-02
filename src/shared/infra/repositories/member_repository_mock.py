@@ -34,13 +34,8 @@ class MemberRepositoryMock(IMemberRepository):
             for member in self.members:
                 if member.member_id == member_id:
                     return member
-            raise NoItemsFound("member_id")
-
-        def duplicate_member(self, email: str) -> Optional[Member]:
-            for member in self.members:
-                if member.email == email:
-                    return member
             return None
+
     
         def get_all_members(self) -> List[Member]:
             return self.members

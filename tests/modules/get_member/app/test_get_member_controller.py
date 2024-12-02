@@ -30,7 +30,7 @@ class Test_GetMemberController:
         response = controller(request)
 
         assert response.status_code == 400
-        assert response.body == "No items found for member_id"
+        assert response.body == "No items found for Member"
     
     def test_get_member_controller_wrong_parameter_type(self):
         usecase = GetMemberUsecase(repo)
