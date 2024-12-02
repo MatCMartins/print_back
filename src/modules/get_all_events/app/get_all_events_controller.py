@@ -11,10 +11,8 @@ class GetAllEventsController:
 
     def __call__(self, request: IRequest) -> IResponse:
         try:
-            # Executa o caso de uso para obter todos os eventos
             events = self.usecase()
 
-            # Cria a ViewModel para a resposta
             viewmodel = GetAllEventsViewModel(events=events)
 
             return OK(viewmodel.to_dict())

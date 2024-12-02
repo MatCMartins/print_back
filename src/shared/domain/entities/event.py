@@ -53,6 +53,7 @@ class Event(abc.ABC):
 
     @staticmethod
     def validate_date(param: int) -> bool:
+        print(param)
         return param is not None and isinstance(param, int)
     
     @staticmethod
