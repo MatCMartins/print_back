@@ -53,8 +53,11 @@ class Event(abc.ABC):
 
     @staticmethod
     def validate_date(param: int) -> bool:
-        print(param)
-        return param is not None and isinstance(param, int)
+        if param is None:
+            return False
+        if type(param) != int:
+            return False
+        return True
     
     @staticmethod
     def validate_id(id: str) -> bool:
