@@ -70,14 +70,15 @@ class IacStack(Stack):
             "create-student-organization": self.lambda_stack.create_student_organization_function,
             "update-student-organization": self.lambda_stack.update_student_organization_function,
             "delete-student-organization": self.lambda_stack.delete_student_organization_function,
-            "get-all-notifications": self.lambda_stack.get_all_student_organizations_function,
-            "create-notification": self.lambda_stack.create_student_organization_function,
-            "update-notification": self.lambda_stack.update_student_organization_function,
-            "delete-notification": self.lambda_stack.delete_student_organization_function,
+            "get-all-notifications": self.lambda_stack.get_all_notifications_function,
+            "create-notification": self.lambda_stack.create_notification_function,
+            "update-notification": self.lambda_stack.update_notification_function,
+            "delete-notification": self.lambda_stack.delete_notification_function,
             "get-course": self.lambda_stack.get_course_function,
             "get-student-organization": self.lambda_stack.get_student_organization_function,
             "get-member": self.lambda_stack.get_member_function,
-            "get-event": self.lambda_stack.get_event_function
+            "get-event": self.lambda_stack.get_event_function,
+            "get-notification": self.lambda_stack.get_notification_function
         }
 
         for path, lambda_function in endpoints.items():
