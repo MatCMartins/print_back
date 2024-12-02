@@ -19,7 +19,6 @@ class NotificationRepositoryDynamo(INotificationRepository):
         return f"#{notification_id}"
 
     def __init__(self):
-        # Atualiza para usar a tabela específica do DynamoDB para "NOtification"
         self.dynamo = DynamoDatasource(
             endpoint_url=Environments.get_envs().endpoint_url,
             dynamo_table_name=Environments.get_envs().dynamo_tables["NOTIFICATION"],  # Usa a tabela de notificacoes
@@ -40,7 +39,7 @@ class NotificationRepositoryDynamo(INotificationRepository):
         notification_dto = NotificationDynamoDTO.from_dynamo(resp["Item"])
         return notification_dto.to_entity()
 
-    def get_all_notification(self) -> List[Notification]:
+    def get_all_notifications(self) -> List[Notification]:
         resp = self.dynamo.get_all_items()
         notification = []
         for item in resp.get('Items', []):
