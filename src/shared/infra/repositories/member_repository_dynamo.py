@@ -57,4 +57,20 @@ class MemberRepositoryDynamo(IMemberRepository):
         )
         return new_member
 
+    def update_member_activities(self, member: Member, activities: list) -> Member:
+        item_to_update = {}
+
+        item_to_update['activities'] = activities
+
+        if not item_to_update:
+            raise NoItemsFound("Nothing to update")
+
+        resp = self.dynamo.update_item(
+            partition_key=self.partition_key_format(member.member_id),
+            sort_key=self.sort_key_format(member.member_id),
+            update_dict=item_to_update
+        )
+
+        return MemberDynamoDTO.from_dynamo(resp['Attributes']).to_entity()
+
 

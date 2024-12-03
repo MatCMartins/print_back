@@ -27,3 +27,10 @@ class IMemberRepository(ABC):
         """
         pass
 
+    @abstractmethod
+    def update_member_activities(self, member: Member, activities: list) -> Member:
+        """
+        Updates Activities list for a member
+        """
+        pass
+

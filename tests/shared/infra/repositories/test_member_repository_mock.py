@@ -14,7 +14,7 @@ class Test_MemberRepositoryMock:
         assert member.member_id == "76d4b5c2-82af-4f36-9d8b-92a7f4b1234a"
         assert member.name == "Alice Johnson"
         assert member.email == "alice.johnson@gmail.com"
-        assert member.activities == ["8329f5105520a1b72d062628c077ddfa", "e19e98a669ae21f94ffd1659998fd072"]
+        assert member.activities == ["aB63na9a-82af-4f36-9d8b-92a7f4b1234a"]
 
     def test_get_member_not_found(self):
         repo = MemberRepositoryMock()

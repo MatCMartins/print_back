@@ -78,7 +78,8 @@ class IacStack(Stack):
             "get-student-organization": self.lambda_stack.get_student_organization_function,
             "get-member": self.lambda_stack.get_member_function,
             "get-event": self.lambda_stack.get_event_function,
-            "get-notification": self.lambda_stack.get_notification_function
+            "get-notification": self.lambda_stack.get_notification_function,
+            "update-member-activities": self.lambda_stack.update_member_activities_function
         }
 
         for path, lambda_function in endpoints.items():

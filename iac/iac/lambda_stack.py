@@ -47,6 +47,8 @@ class LambdaStack(Construct):
         self.update_student_organization_function = self.create_lambda_function("update_student_organization", environment_variables)
         self.update_notification_function = self.create_lambda_function("update_notification", environment_variables)
 
+        self.update_member_activities_function = self.create_lambda_function("update_member_activities", environment_variables)
+
         self.functions_that_need_dynamo_permissions = [
             self.create_course_function,
             self.create_event_function,
