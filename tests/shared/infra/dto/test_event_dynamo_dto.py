@@ -44,9 +44,9 @@ class Test_EventDynamoDTO:
             "name": repo.events[0].name,
             "description": repo.events[0].description,
             "banner": repo.events[0].banner,
-            "start_date": repo.events[0].start_date,
-            "end_date": repo.events[0].end_date,
-            "rooms": repo.events[0].rooms,
+            "start_date": str(repo.events[0].start_date),
+            "end_date": str(repo.events[0].end_date),
+            "rooms": {k: str(v) for k,v in repo.events[0].rooms.items()},
             "subscribers": repo.events[0].subscribers
         }
 
@@ -151,9 +151,9 @@ class Test_EventDynamoDTO:
             "name": repo.events[0].name,
             "description": repo.events[0].description,
             "banner": repo.events[0].banner,
-            "start_date": repo.events[0].start_date,
-            "end_date": repo.events[0].end_date,
-            "rooms": repo.events[0].rooms,
+            "start_date": str(repo.events[0].start_date),
+            "end_date": str(repo.events[0].end_date),
+            "rooms": {k: str(v) for k,v in repo.events[0].rooms.items()},
             "subscribers": repo.events[0].subscribers
         }
 
