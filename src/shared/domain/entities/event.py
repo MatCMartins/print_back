@@ -1,5 +1,4 @@
 import abc
-from decimal import Decimal
 import uuid
 from typing import Optional, Dict
 from src.shared.helpers.errors.domain_errors import EntityError

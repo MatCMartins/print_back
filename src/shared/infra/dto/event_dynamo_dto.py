@@ -49,9 +49,9 @@ class EventDynamoDTO:
             "name": self.name,
             "description": self.description,
             "banner": self.banner,
-            "start_date": Decimal(str(self.start_date)),
-            "end_date": Decimal(str(self.end_date)),
-            "rooms": {k: Decimal(str(v)) for k,v in self.rooms.items()},
+            "start_date": str(self.start_date),
+            "end_date": str(self.end_date),
+            "rooms": {k: str(v) for k,v in self.rooms.items()},
             "subscribers": self.subscribers
         }
 
