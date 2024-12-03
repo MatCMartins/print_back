@@ -34,7 +34,7 @@ class MemberRepositoryDynamo(IMemberRepository):
         )
 
         if resp.get('Item') is None:
-            raise NoItemsFound("member_id")
+            return None
 
         member_dto = MemberDynamoDTO.from_dynamo(resp["Item"])
         return member_dto.to_entity()
