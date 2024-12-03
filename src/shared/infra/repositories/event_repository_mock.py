@@ -78,3 +78,30 @@ class EventRepositoryMock(IEventRepository):
                     event.subscribers = new_subscribers
                 return event
         raise NoItemsFound("event_id")
+    
+    def subscribe_event(self, event_id: str, member_id: str) -> Event:
+        for event in self.events:
+            if event.event_id == event_id:
+                if sum(event.rooms.values()) > 0:
+                    biggest_room = ""
+                    for room in event.rooms.keys():
+                        if biggest_room == "":
+                            biggest_room = room
+                        elif event.rooms[room] > event.rooms[biggest_room]:
+                            biggest_room = room
+                    event.rooms[biggest_room] -= 1
+                    event.subscribers[member_id] = biggest_room
+                return event
+        raise NoItemsFound("event_id")
+            
+    def unsubscribe_event(self, event_id: str, member_id: str) -> Event:
+        for event in self.events:
+            if event.event_id == event_id:
+                subscriber_room = event.subscribers[member_id]
+                event.rooms[subscriber_room] += 1
+                event.subscribers.pop(member_id)
+                return event
+        raise NoItemsFound("event_id")
+                
+                    
+

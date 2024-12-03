@@ -34,3 +34,17 @@ class IEventRepository(ABC):
         If event_id not found, raise NoItemsFound
         """
         pass
+
+    @abstractmethod
+    def subscribe_event(self, event_id: str, member_id: str) -> Event:
+        """
+        If event_id not found, raise NoItemsFound
+        """
+        pass
+
+    @abstractmethod
+    def unsubscribe_event(self, event_id: str, member_id: str) -> Event:
+        """
+        If event_id not found, raise NoItemsFound
+        """
+        pass

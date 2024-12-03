@@ -4,6 +4,7 @@ from src.shared.domain.entities.event import Event
 from src.shared.domain.repositories.event_repository_interface import IEventRepository
 from src.shared.environments import Environments
 from src.shared.helpers.errors.usecase_errors import NoItemsFound
+from src.shared.helpers.errors.usecase_errors import NoSpaceRooms
 from src.shared.infra.dto.event_dynamo_dto import EventDynamoDTO
 from src.shared.infra.external.dynamo.datasources.dynamo_datasource import DynamoDatasource
 
@@ -107,3 +108,54 @@ class EventRepositoryDynamo(IEventRepository):
         )
 
         return EventDynamoDTO.from_dynamo(resp['Attributes']).to_entity()
+
+    def subscribe_event(self, event_id: str, member_id: str) -> Event:
+        item_to_update = {}
+        
+        event = self.get_event(event_id)
+
+        if sum(event.rooms.values()) > 0:
+            biggest_room = ""
+            for room in event.rooms.keys():
+                if biggest_room == "":
+                    biggest_room = room
+                elif event.rooms[room] > event.rooms[biggest_room]:
+                    biggest_room = room
+            event.rooms[biggest_room] -= 1
+            event.subscribers[member_id] = biggest_room
+            
+            item_to_update['rooms'] = event.rooms
+            item_to_update['subscribers'] = event.subscribers
+
+            resp = self.dynamo.update_item(
+                partition_key=self.partition_key_format(event_id),
+                sort_key=self.sort_key_format(event_id),
+                update_dict=item_to_update
+            )
+
+            return EventDynamoDTO.from_dynamo(resp['Attributes']).to_entity()
+
+        raise NoSpaceRooms("member_id")
+    
+    def unsubscribe_event(self, event_id: str, member_id: str) -> Event:
+        item_to_update = {}
+        
+        event = self.get_event(event_id)
+
+        if event.event_id == event_id:
+            subscriber_room = event.subscribers[member_id]
+            event.rooms[subscriber_room] += 1
+            event.subscribers.pop(member_id)
+            
+            item_to_update['rooms'] = event.rooms
+            item_to_update['subscribers'] = event.subscribers
+
+            resp = self.dynamo.update_item(
+                partition_key=self.partition_key_format(event_id),
+                sort_key=self.sort_key_format(event_id),
+                update_dict=item_to_update
+            )
+
+            return EventDynamoDTO.from_dynamo(resp['Attributes']).to_entity()
+
+        raise NoSpaceRooms("member_id")

@@ -102,4 +102,32 @@ class Test_EventRepositoryMock:
         event = repo.update_event(repo.events[0].event_id, new_banner="https://newbanner.com/banner.png")
 
         assert repo.events[0].banner == "https://newbanner.com/banner.png"
+    
+    def test_subscribe_event(self):
+        repo = EventRepositoryMock()
+        event = repo.subscribe_event(repo.events[0].event_id, "7d644e62-ef8b-4728-a92b-becb8930c24e")
+
+        assert event.subscribers == {"user1": "Main Hall", "user2": "Workshop Room 1", "7d644e62-ef8b-4728-a92b-becb8930c24e": "Main Hall"}
+        assert repo.events[0].rooms == {"Main Hall": 99, "Workshop Room 1": 30}
+        assert event.rooms == {"Main Hall": 99, "Workshop Room 1": 30}
+
+    def test_subscribe_event_wrong_event_id(self):
+        repo = EventRepositoryMock()
+
+        with pytest.raises(NoItemsFound):
+            repo.subscribe_event("nonexistent_id", "7d644e62-ef8b-4728-a92b-becb8930c24e")
+
+    def test_unsubscribe_event(self):
+        repo = EventRepositoryMock()
+        event = repo.unsubscribe_event(repo.events[0].event_id, "user1")
+
+        assert event.subscribers == {"user2": "Workshop Room 1"}
+        assert repo.events[0].rooms == {"Main Hall": 101, "Workshop Room 1": 30}
+        assert event.rooms == {"Main Hall": 101, "Workshop Room 1": 30}
+
+    def test_unsubscribe_event_wrong_event_id(self):
+        repo = EventRepositoryMock()
+
+        with pytest.raises(NoItemsFound):
+            repo.subscribe_event("nonexistent_id", "7d644e62-ef8b-4728-a92b-becb8930c24e")
 
