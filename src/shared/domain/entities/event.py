@@ -54,6 +54,8 @@ class Event(abc.ABC):
 
     @staticmethod
     def validate_date(param: Decimal) -> bool:
+        if type(param) == int:
+            param = Decimal(param)
         if param is None:
             return False
         if type(param) != Decimal:
