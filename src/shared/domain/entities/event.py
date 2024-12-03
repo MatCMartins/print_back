@@ -1,4 +1,5 @@
 import abc
+from decimal import Decimal
 import uuid
 from typing import Optional, Dict
 from src.shared.helpers.errors.domain_errors import EntityError
@@ -52,11 +53,10 @@ class Event(abc.ABC):
         return param is not None and isinstance(param, str)
 
     @staticmethod
-    def validate_date(param: int) -> bool:
-        print(param, type(param))
+    def validate_date(param: Decimal) -> bool:
         if param is None:
             return False
-        if type(param) != int:
+        if type(param) != Decimal:
             return False
         return True
     
