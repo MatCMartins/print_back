@@ -48,6 +48,9 @@ class LambdaStack(Construct):
         self.update_notification_function = self.create_lambda_function("update_notification", environment_variables)
 
         self.update_member_activities_function = self.create_lambda_function("update_member_activities", environment_variables)
+        self.subscribe_event_function = self.create_lambda_function("subscribe_event", environment_variables)
+        self.unsubscribe_event_function = self.create_lambda_function("unsubscribe_event", environment_variables)
+
 
         self.functions_that_need_dynamo_permissions = [
             self.create_course_function,
@@ -73,7 +76,9 @@ class LambdaStack(Construct):
             self.update_event_function,
             self.update_student_organization_function,
             self.update_notification_function,
-            self.update_member_activities_function
+            self.update_member_activities_function,
+            self.subscribe_event_function,
+            self.unsubscribe_event_function
         ]
 
         self.functions_that_need_s3_permissions = [
