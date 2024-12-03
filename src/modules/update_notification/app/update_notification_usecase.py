@@ -13,4 +13,14 @@ class UpdateNotificationUsecase:
         if not self.repo.get_notification(notification_id):
             raise NoItemsFound("Notification")
         
-        return self.repo.update_notification(notification_id, title, description, creation_date, has_seen)
+        notification = self.repo.get_notification(notification_id)
+
+        if title is not None:
+            notification.title = title
+        if description is not None:
+            notification.description = description
+        if creation_date is not None:
+            notification.creation_date = creation_date
+        
+        
+        return self.repo.update_notification(notification_id, notification.title, notification.description, notification.creation_date, notification.has_seen)
