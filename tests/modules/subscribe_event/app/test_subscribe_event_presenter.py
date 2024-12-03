@@ -23,6 +23,8 @@ class Test_SubscribeEventPresenter:
                 "header2": "value1,value2"
             },
             "queryStringParameters": {
+                "event_id": "7d644e62-ef8b-4728-a92b-becb8930c24e",
+                "member_id": "7d644e62-ef8b-4728-a92b-becb8930c24e"
             },
             "requestContext": {
                 "accountId": "123456789012",
@@ -62,3 +64,5 @@ class Test_SubscribeEventPresenter:
 
         response = lambda_handler(event, None)
         assert response["statusCode"] == 200
+        assert json.loads(response["body"])["rooms"] == {"Main Hall": 99, "Workshop Room 1": 30}
+        assert json.loads(response["body"])["subscribers"] == {"user1": "Main Hall", "user2": "Workshop Room 1", "7d644e62-ef8b-4728-a92b-becb8930c24e": "Main Hall"}

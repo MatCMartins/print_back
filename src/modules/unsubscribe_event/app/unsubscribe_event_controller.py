@@ -15,11 +15,16 @@ class UnsubscribeEventController:
         try:
             if request.data.get('event_id') is None:
                 raise MissingParameters("event_id")
+            if request.data.get('member_id') is None:
+                raise MissingParameters("member_id")
             
             if type(request.data.get('event_id')) is not str:
                 raise WrongTypeParameter("event_id", str, type(request.data.get('event_id')))
             
-            event = self.usecase(request.data.get('event_id'))
+            if type(request.data.get('member_id')) is not str:
+                raise WrongTypeParameter("member_id", str, type(request.data.get('member_id')))
+            
+            event = self.usecase(request.data.get('event_id'), request.data.get('member_id'))
 
             viewmodel = UnsubscribeEventViewmodel(
                 event_id=event.event_id,
