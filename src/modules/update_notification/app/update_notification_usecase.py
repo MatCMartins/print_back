@@ -23,4 +23,4 @@ class UpdateNotificationUsecase:
             notification.creation_date = creation_date
         
         
-        return self.repo.update_notification(notification_id, notification.title, notification.description, notification.creation_date, notification.has_seen)
+        return self.repo.update_notification(notification_id, notification.title, notification.description, notification.creation_date, has_seen)
