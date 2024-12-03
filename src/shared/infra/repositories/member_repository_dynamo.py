@@ -21,7 +21,7 @@ class MemberRepositoryDynamo(IMemberRepository):
     def __init__(self):
         self.dynamo = DynamoDatasource(
             endpoint_url=Environments.get_envs().endpoint_url,
-            dynamo_table_name=Environments.get_envs().dynamo_tables["MEMBER"],  # Usa a tabela de membros
+            dynamo_table_name=Environments.get_envs().dynamo_tables["MEMBER"],
             region=Environments.get_envs().region,
             partition_key="PK",
             sort_key="SK" 
@@ -43,7 +43,7 @@ class MemberRepositoryDynamo(IMemberRepository):
         resp = self.dynamo.get_all_items()
         members = []
         for item in resp.get('Items', []):
-            if item.get("entity") == 'member':
+            if item.get("entity") == 'Member':
                 members.append(MemberDynamoDTO.from_dynamo(item).to_entity())
 
         return members
