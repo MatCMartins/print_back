@@ -79,7 +79,7 @@ class NotificationRepositoryDynamo(INotificationRepository):
         item_to_update = {}
 
         if new_name is not None:
-            item_to_update['name'] = new_name
+            item_to_update['title'] = new_name
         if new_description is not None:
             item_to_update['description'] = new_description
         if new_creation_date is not None:
