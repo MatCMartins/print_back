@@ -19,7 +19,7 @@ class UpdateMemberActivitiesUsecase:
         member = self.repo_member.get_member(member_id)
         if not member:
             raise NoItemsFound("Member")
-        if (event_id not in activities):
+        if (event_id not in activities) or ((event_id not in activities) and (event_id not in member.activities)):
             raise NoItemsFound("activities")
         
         
