@@ -73,6 +73,7 @@ class LambdaStack(Construct):
             self.update_event_function,
             self.update_student_organization_function,
             self.update_notification_function,
+            self.update_member_activities_function
         ]
 
         self.functions_that_need_s3_permissions = [
