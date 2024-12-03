@@ -54,8 +54,6 @@ class Event(abc.ABC):
 
     @staticmethod
     def validate_date(param: Decimal) -> bool:
-        if type(param) == int:
-            param = Decimal(param)
         if param is None:
             return False
         if type(param) != Decimal:
@@ -77,8 +75,6 @@ class Event(abc.ABC):
         if not isinstance(rooms, dict):
             return False
         for room, capacity in rooms.items():
-            if type(capacity) == int:
-                capacity = Decimal(capacity)
             if not isinstance(room, str) or not isinstance(capacity, Decimal):
                 return False
         return True
