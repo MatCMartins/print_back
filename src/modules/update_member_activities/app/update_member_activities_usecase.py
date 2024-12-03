@@ -12,14 +12,16 @@ class UpdateMemberActivitiesUsecase:
         self.repo_event = repo_event
     
     def __call__(self, event_id: str, member_id: str, activities: list) -> Member:
-
-        if event_id not in activities:
-            raise NoItemsFound("activities")
+        
         
         if not self.repo_event.get_event(event_id):
             raise NoItemsFound("Event")
         member = self.repo_member.get_member(member_id)
         if not member:
             raise NoItemsFound("Member")
+        if event_id not in member.activities:
+            if event_id not in activities:
+                raise NoItemsFound("activities")
+        
         
         return self.repo_member.update_member_activities(member, activities)
