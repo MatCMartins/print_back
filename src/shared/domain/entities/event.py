@@ -77,7 +77,9 @@ class Event(abc.ABC):
         if not isinstance(rooms, dict):
             return False
         for room, capacity in rooms.items():
-            if not isinstance(room, str) or not isinstance(capacity, int):
+            if type(capacity) == int:
+                capacity = Decimal(capacity)
+            if not isinstance(room, str) or not isinstance(capacity, Decimal):
                 return False
         return True
 
