@@ -61,3 +61,25 @@ class Test_EventRepositoryDynamo:
         resp = event_repository.update_event(event_id=event_repository_mock.events[0].event_id, new_name="Tech Conference 2023")
 
         assert resp.name == "Tech Conference 2023"
+    
+    @pytest.mark.skip(reason="Needs DynamoDB")
+    def test_subscribe_event(self):
+        
+        event_repository = EventRepositoryDynamo()
+        event_repository_mock = EventRepositoryMock()
+        resp = event_repository.subscribe_event(event_id=event_repository_mock.events[0].event_id, member_id="7d644e62-ef8b-4728-a92b-becb8930c24e")
+
+        assert resp.subscribers == {"user1": "Main Hall", "user2": "Workshop Room 1", "7d644e62-ef8b-4728-a92b-becb8930c24e": "Main Hall"}
+        assert resp.rooms == {"Main Hall": 99, "Workshop Room 1": 30}
+
+    @pytest.mark.skip(reason="Needs DynamoDB")
+    def test_unsubscribe_event(self):
+        
+        event_repository = EventRepositoryDynamo()
+        event_repository_mock = EventRepositoryMock()
+        resp = event_repository.subscribe_event(event_id=event_repository_mock.events[0].event_id, member_id="user1")
+
+        assert resp.subscribers == {"user2": "Workshop Room 1"}
+        assert resp.rooms == {"Main Hall": 101, "Workshop Room 1": 30}
+    
+    
