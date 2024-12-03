@@ -1,3 +1,4 @@
+from decimal import Decimal
 from src.shared.domain.entities.event import Event
 from typing import Optional, Dict
 
@@ -48,9 +49,9 @@ class EventDynamoDTO:
             "name": self.name,
             "description": self.description,
             "banner": self.banner,
-            "start_date": self.start_date,
-            "end_date": self.end_date,
-            "rooms": self.rooms,
+            "start_date": Decimal(str(self.start_date)),
+            "end_date": Decimal(str(self.end_date)),
+            "rooms": {k: Decimal(str(v)) for k,v in self.rooms.items()},
             "subscribers": self.subscribers
         }
 
@@ -65,9 +66,9 @@ class EventDynamoDTO:
             name=event_data["name"],
             description=event_data["description"],
             banner=event_data.get("banner"),
-            start_date=event_data["start_date"],
-            end_date=event_data["end_date"],
-            rooms=event_data["rooms"],
+            start_date=int(event_data["start_date"]),
+            end_date=int(event_data["end_date"]),
+            rooms={k: int(v) for k,v in event_data["rooms"].items()},
             subscribers=event_data["subscribers"]
         )
 
