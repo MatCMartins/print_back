@@ -15,7 +15,7 @@ def authenticate(event):
             token = auth_header.split(" ")[1]
 
     if not token:
-        return {"error": "Token de autorização ausente"}, 401
+        print("error:"+ "Token de autorização ausente"+ 401)
 
     try:
         jwks_uri = f"{authority}/discovery/v2.0/keys"
@@ -34,13 +34,13 @@ def authenticate(event):
 
         # Verifica os escopos
         if "scp" not in decoded_token or "User.Read" not in decoded_token["scp"]:
-            return {"error": "Escopo inválido"}, 403
+            print("error:"+ "Escopo inválido"+ 403)
 
         return {"user": decoded_token}, 200
 
     except ExpiredSignatureError:
-        return {"error": "Token expirado"}, 401
+        print("error:"+ "Token expirado"+ 401)
     except DecodeError:
-        return {"error": "Token inválido"}, 401
+        print("error:"+ "Token inválido"+ 401)
     except Exception as e:
-        return {"error": f"Erro ao validar token: {str(e)}"}, 500
+        print("error:"+ f"Erro ao validar token: {str(e)}"+ 500)
